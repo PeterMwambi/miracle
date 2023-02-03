@@ -1,0 +1,20 @@
+.teambp__formFooter a {
+  text-decoration: none;
+  color: rgb(129, 129, 129);
+}
+.teambp__formFooter a:hover {
+  text-decoration: underline;
+  color: rgb(0, 119, 255);
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.small {
+  max-width: 20px;
+}
+
+.medium {
+  max-width: 100px;
+}

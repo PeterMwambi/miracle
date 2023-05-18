@@ -20,24 +20,24 @@ class Create extends Query
   private $_action;
 
 
-  public function Table(string $table)
+  public function table(string $table)
   {
     $this->_table = $table;
-    $this->SetAction(1);
+    $this->_setAction(1);
   }
 
-  public function Columns(array $columns)
+  public function columns(array $columns)
   {
     $this->_columns = $columns;
   }
 
-  public function Database(string $database)
+  public function database(string $database)
   {
     $this->_database = $database;
-    $this->SetAction(0);
+    $this->_setAction(0);
   }
 
-  private function CreateDatabase()
+  private function createDatabase()
   {
     if (isset($this->_database)) {
       $this->_sql = "CREATE DATABASE IF NOT EXISTS {$this->_database}";
@@ -48,7 +48,7 @@ class Create extends Query
 
 
 
-  private function CreateTable()
+  private function createTable()
   {
     if (isset($this->_table) && count($this->_columns)) {
       $this->_sql = "CREATE TABLE IF NOT EXISTS {$this->_table} (";
@@ -66,13 +66,13 @@ class Create extends Query
     throw new Exception("Warning: Database parameters are invalid or missing");
   }
 
-  private function SetAction(int $action)
+  private function _setAction(int $action)
   {
     $this->_action = $action;
   }
 
 
-  private function ResolveAction()
+  private function resolveAction()
   {
     if (isset($this->_action)) {
       switch ($this->_action) {
@@ -88,7 +88,7 @@ class Create extends Query
     }
   }
 
-  private function BindQuery()
+  private function bindQuery()
   {
     $resolve = $this->ResolveAction();
     switch ($resolve["action"]) {
@@ -106,7 +106,7 @@ class Create extends Query
 
   }
 
-  public function Execute()
+  public function execute()
   {
     if ($this->BindQuery()) {
       if (parent::RunSQL($this->_sql, 2)) {

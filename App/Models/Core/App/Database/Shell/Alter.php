@@ -14,12 +14,12 @@ class Alter extends Query
     private $_sql;
 
 
-    public function Table(string $table)
+    public function table(string $table)
     {
         $this->_table = $table;
     }
 
-    public function Add(string $column, array $datatypes = array())
+    public function add(string $column, array $datatypes = array())
     {
         $datatype = "";
         if (count($datatypes) && isset($this->_table)) {
@@ -32,7 +32,7 @@ class Alter extends Query
         }
     }
 
-    public function Rename(string $oldName, string $newName, string $dataType)
+    public function rename(string $oldName, string $newName, string $dataType)
     {
         if (isset($this->_table)) {
             $this->_sql = "ALTER TABLE {$this->_table} CHANGE {$oldName} {$newName} {$dataType}";
@@ -42,7 +42,7 @@ class Alter extends Query
     }
 
 
-    public function Modify(string $column, array $datatypes = array())
+    public function modify(string $column, array $datatypes = array())
     {
         $datatype = "";
         if (count($datatypes) && isset($this->_table)) {
@@ -55,7 +55,7 @@ class Alter extends Query
         }
     }
 
-    public function Drop($column)
+    public function drop($column)
     {
         if (isset($this->_table)) {
             $this->_sql = "ALTER TABLE {$this->_table} DROP {$column}";
@@ -64,7 +64,7 @@ class Alter extends Query
         }
     }
 
-    public function Execute()
+    public function execute()
     {
         if (isset($this->_sql)) {
             parent::RunSQL($this->_sql, 2);

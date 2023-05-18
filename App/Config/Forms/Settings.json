@@ -1,1 +1,128 @@
-{}
+{
+    "attendant-registration-form-step-1": {
+        "rules": "attendant-registration/step-1",
+        "errors": "attendant-registration/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "You have successfully completed step 1",
+        "errormessage": "Something went wrong. Please try again later",
+        "nextstep": "go-to-attendant-registration-step-2",
+        "handler": "attendant-registration"
+    },
+    "attendant-registration-form-step-2": {
+        "rules": "attendant-registration/step-2",
+        "errors": "attendant-registration/step-2",
+        "method": "storage/storeToCache",
+        "successmessage": "You have successfully completed step 2",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "register-attendant/registerAttendant",
+        "nextstep": "complete-setup",
+        "handler": "attendant-registration"
+    },
+    "attendant-login-form": {
+        "rules": "attendant-login/step-1",
+        "errors": "attendant-login/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "Login was successful",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "login-attendant/loginAttendant",
+        "nextstep": "complete-setup",
+        "handler": "attendant-login"
+    },
+    "client-registration-form-step-1": {
+        "rules": "client-registration/step-1",
+        "errors": "client-registration/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "You have successfully completed step 1",
+        "errormessage": "Something went wrong. Please try again later",
+        "nextstep": "go-to-client-registration-step-2",
+        "handler": "client-registration"
+    },
+    "client-registration-form-step-2": {
+        "rules": "client-registration/step-2",
+        "errors": "client-registration/step-2",
+        "method": "storage/storeToCache",
+        "successmessage": "You have successfully completed step 2",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "register-client/registerClient",
+        "nextstep": "complete-setup",
+        "handler": "client-registration"
+    },
+    "client-login-form": {
+        "rules": "client-login/step-1",
+        "errors": "client-login/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "Login was successful",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "login-client/loginClient",
+        "nextstep": "complete-setup",
+        "handler": "client-login"
+    },
+    "admin-registration-form-step-1": {
+        "rules": "admin-registration/step-1",
+        "errors": "admin-registration/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "You have successfully completed step 1",
+        "errormessage": "Something went wrong. Please try again later",
+        "nextstep": "go-to-admin-registration-step-2",
+        "handler": "admin-registration"
+    },
+    "admin-registration-form-step-2": {
+        "rules": "admin-registration/step-2",
+        "errors": "admin-registration/step-2",
+        "method": "storage/storeToCache",
+        "successmessage": "You have successfully completed step 2",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "register-admin/registerAdmin",
+        "nextstep": "complete-setup",
+        "handler": "admin-registration"
+    },
+    "admin-login-form": {
+        "rules": "admin-login/step-1",
+        "errors": "admin-login/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "Login was successful",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "login-admin/loginAdmin",
+        "nextstep": "complete-setup",
+        "handler": "admin-login"
+    },
+    "service-registration-form-step-1": {
+        "rules": "service-registration/step-1",
+        "errors": "service-registration/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "You have successfully completed step 1",
+        "errormessage": "Something went wrong. Please try again later",
+        "nextstep": "go-to-service-registration-step-2",
+        "handler": "service-registration"
+    },
+    "service-registration-form-step-2": {
+        "rules": "service-registration/step-2",
+        "errors": "service-registration/step-2",
+        "method": "storage/storeToCache",
+        "successmessage": "You have successfully completed step 2",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "register-admin/registerService",
+        "nextstep": "complete-setup",
+        "handler": "service-registration"
+    },
+    "client-payment-form": {
+        "rules": "client-payment/step-1",
+        "errors": "client-payment/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "Payment was successful",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "register-client/processPayment",
+        "nextstep": "complete-setup",
+        "handler": "client-payment"
+    },
+    "client-booking-form": {
+        "rules": "client-booking/step-1",
+        "errors": "client-booking/step-1",
+        "method": "storage/storeToCache",
+        "successmessage": "Booking was successful",
+        "errormessage": "Something went wrong. Please try again later",
+        "commit": "register-client/processBooking",
+        "nextstep": "complete-setup",
+        "handler": "client-booking"
+    }
+}

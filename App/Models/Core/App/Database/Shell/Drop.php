@@ -11,17 +11,17 @@ class Drop extends Query
 {
 
     private $_sql;
-    public function Database(string $database)
+    public function database(string $database)
     {
         $this->_sql = "DROP DATABASE {$database}";
     }
 
-    public function Table(string $table)
+    public function table(string $table)
     {
         $this->_sql = "DROP TABLE {$table}";
     }
 
-    public function Execute()
+    public function execute()
     {
         if (isset($this->_sql)) {
             parent::RunSQL($this->_sql, 2);

@@ -14,7 +14,7 @@ use Exception;
 class Session
 {
 
-    public static function Set(string $name, mixed $value, string $type = "string"): mixed
+    public static function set(string $name, mixed $value, string $type = "string"): mixed
     {
         switch ($type) {
             case 'string':
@@ -26,7 +26,7 @@ class Session
         }
     }
 
-    public static function Exists(string $name): bool
+    public static function exists(string $name): bool
     {
         if (isset($_SESSION[$name])) {
             return true;
@@ -35,7 +35,7 @@ class Session
         }
     }
 
-    public static function Get(string $name): mixed
+    public static function get(string $name): mixed
     {
         if (self::Exists($name)) {
             return $_SESSION[$name];
@@ -51,7 +51,7 @@ class Session
      * Checks if a session is set, returns true and unsets the session
      * otherwise returns false if session does not exist
      */
-    public static function Destroy(string $name)
+    public static function destroy(string $name)
     {
         if (isset($_SESSION[$name])) {
             unset($_SESSION[$name]);
@@ -59,12 +59,14 @@ class Session
         return;
     }
 
-    public static function Start()
+    public static function start()
     {
-        return session_start();
+        if (empty(session_id())) {
+            return session_start();
+        }
     }
 
-    public static function End()
+    public static function end()
     {
         return session_destroy();
     }

@@ -1,0 +1,13 @@
+{
+    "expected-checkin-date": {
+        "required": "Your expected date of checking in is required",
+        "start-year": "Expected check in year cannot be before this year",
+        "end-year": "Expected check in year cannot be after this year",
+        "start-month": "Expected check in month cannot be before this month",
+        "end-month": "Expected check in month cannot be after this month",
+        "start-date": "Expected check in date cannot be before this date"
+    },
+    "expected-checkin-time": {
+        "required": "Your expected time of checking in is required"
+    }
+}

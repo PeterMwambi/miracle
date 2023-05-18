@@ -4,54 +4,53 @@ namespace Models\Core\App\Database\Shell;
 
 use Exception;
 
-define("ALLOW_DBQUERY_ACCESS", true);
 class Select extends Query
 {
 
 
-    private $_fields;
+    private $fields;
 
-    private $_table;
+    private $table;
 
-    private $_fetch;
+    private $fetch;
 
-    private $_where = array();
+    private $where = array();
 
-    public function Fields(array $fields)
+    public function fields(array $fields)
     {
-        $this->_fields = $fields;
+        $this->fields = $fields;
     }
 
-    public function Table(string $table)
+    public function table(string $table)
     {
-        $this->_table = $table;
+        $this->table = $table;
     }
 
-    public function Fetch(int $fetch)
+    public function fetch(int $fetch)
     {
-        $this->_fetch = $fetch;
+        $this->fetch = $fetch;
     }
 
-    public function Where(array $where)
+    public function where(array $where)
     {
-        $this->_where = $where;
+        $this->where = $where;
     }
-    public function Execute()
+    public function execute()
     {
-        if (count($this->_fields)) {
+        if (count($this->fields)) {
             $fieldValue = '';
             $x = 1;
-            foreach ($this->_fields as $field) {
+            foreach ($this->fields as $field) {
                 $fieldValue .= $field;
-                if ($x < count($this->_fields)) {
+                if ($x < count($this->fields)) {
                     $fieldValue .= ', ';
                 }
                 $x++;
             }
-            if (count($this->_where)) {
-                return parent::BindSQL("SELECT {$fieldValue}", $this->_table, $this->_fetch, $this->_where);
+            if (count($this->where)) {
+                return parent::bindSQL("SELECT {$fieldValue}", $this->table, $this->fetch, $this->where);
             } else {
-                return parent::BindSQL("SELECT {$fieldValue}", $this->_table, $this->_fetch);
+                return parent::bindSQL("SELECT {$fieldValue}", $this->table, $this->fetch);
             }
         }
         throw new Exception("Warning: Fields were not found");

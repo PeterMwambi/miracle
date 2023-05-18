@@ -1,0 +1,10 @@
+{
+    "pictures": {
+        "file": {
+            "required": "Service image is required",
+            "exists": "Service image already exists",
+            "allowedTypes": "Service image type is invalid. Please use png, jpg, or jpeg",
+            "max": "Service image size is too large. Please use an image bellow 500 kbs"
+        }
+    }
+}

@@ -5,7 +5,7 @@ namespace Models\Components;
 
 class BreadCrumbComponent
 {
-    public function GetComponent()
+    public function getComponent()
     {
         return
             '<nav class="breadcrumb">

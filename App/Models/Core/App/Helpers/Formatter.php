@@ -4,11 +4,9 @@ namespace Models\Core\App\Helpers;
 
 final class Formatter extends DataTypes
 {
-
-
     private static $_instance;
 
-    public static function Run()
+    public static function run()
     {
         if (!isset(self::$_instance)) {
             self::$_instance = new Formatter;
@@ -16,35 +14,28 @@ final class Formatter extends DataTypes
         return self::$_instance;
     }
 
-    public static function GetArrayKeys(array $array)
+    public static function getArrayKeys(array $array)
     {
         return array_keys($array);
     }
 
 
-    public function FormatArray(array $array, array $keys)
+    public function formatArray(array $array, array $keys)
     {
-        return parent::RunArrayWriter($array, $keys);
+        return parent::runArrayWriter($array, $keys);
     }
 
-    public static function FormatToArray(mixed $data)
+    public function formatStringToArray(string $string, array $keys = [])
     {
-        return ((array) $data);
+        parent::setString($string);
+        parent::setFormatterKeys($keys);
+        return parent::runFormatter("array");
     }
 
-    public static function FormatToObject(array $array)
+    public function formatStringToObject(string $string, array $keys = [])
     {
-        return ((object) $array);
-    }
-    public function FormatStringToArray(string $string, array $keys = [])
-    {
-        parent::SetString($string);
-        return parent::RunFormatter($keys);
-    }
-
-    public function FormatStringToObject(string $string, array $keys)
-    {
-        parent::SetString($string);
-        return ((object) parent::RunFormatter($keys));
+        parent::setString($string);
+        parent::setFormatterKeys($keys);
+        return (parent::runFormatter("object"));
     }
 }

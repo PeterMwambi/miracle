@@ -2,41 +2,33 @@
 
 namespace Models\Core\App\Database\Kernel;
 
-use Models\Core\App\Dependancies\Settings as MainSettings;
-use Exception;
+use Controllers\Controller;
 
-//Database Configuration settings;
-//Get Configuration Settings from JSON file
-class Config extends MainSettings
+class Config extends Controller
 {
 
-    private $_settingsArray = array();
-
-
-    private function GetDatabaseConfig()
+    private function getDsn()
     {
-        $this->_settingsArray = parent::GetDBSettings("DatabaseConnection");
-        return $this->_settingsArray;
+        parent::setDatabaseConnection();
+        return parent::getDatabaseConnection();
     }
 
-
-
-    public function GetHost()
+    protected function host()
     {
-        return $this->GetDatabaseConfig()->host;
+        return $this->getDsn()->host;
     }
-    public function GetUsername()
+    protected function username()
     {
-        return $this->GetDatabaseConfig()->username;
+        return $this->getDsn()->username;
     }
-    public function GetPassword()
+    protected function password()
     {
-        return $this->GetDatabaseConfig()->password;
+        return $this->getDsn()->password;
     }
 
-    public function GetDBName()
+    protected function DBName()
     {
-        return $this->GetDatabaseConfig()->name;
+        return $this->getDsn()->name;
     }
 
 }

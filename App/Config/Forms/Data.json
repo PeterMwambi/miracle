@@ -1,1 +1,80 @@
-{}
+{
+    "admin-registration-form-step-1": [
+        "firstname",
+        "lastname",
+        "gender",
+        "date-of-birth",
+        "age",
+        "nationality",
+        "national-id",
+        "phone-number",
+        "email"
+    ],
+    "admin-registration-form-step-2": [
+        "username",
+        "password",
+        "confirm-password"
+    ],
+    "admin-login-form": [
+        "username",
+        "password"
+    ],
+    "service-registration-form-step-1": [
+        "name",
+        "attendant",
+        "price",
+        "description"
+    ],
+    "service-registration-form-step-2": [
+        "pictures"
+    ],
+    "attendant-registration-form-step-1": [
+        "firstname",
+        "lastname",
+        "gender",
+        "date-of-birth",
+        "age",
+        "nationality",
+        "national-id",
+        "phone-number",
+        "email"
+    ],
+    "attendant-registration-form-step-2": [
+        "username",
+        "password",
+        "confirm-password"
+    ],
+    "attendant-login-form": [
+        "username",
+        "password"
+    ],
+    "client-registration-form-step-1": [
+        "firstname",
+        "lastname",
+        "gender",
+        "date-of-birth",
+        "age",
+        "nationality",
+        "national-id",
+        "phone-number",
+        "email"
+    ],
+    "client-registration-form-step-2": [
+        "username",
+        "password",
+        "confirm-password"
+    ],
+    "client-login-form": [
+        "username",
+        "password"
+    ],
+    "client-payment-form": [
+        "amount",
+        "mode",
+        "transaction-code"
+    ],
+    "client-booking-form": [
+        "expected-checkin-date",
+        "expected-checkin-time"
+    ]
+}

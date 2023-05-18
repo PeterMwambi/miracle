@@ -25,7 +25,7 @@ class Hashing
     private static $_encryption_algorithm = 'AES-256-CBC';
 
 
-    public static function Encrypt(string $data)
+    public static function encrypt(string $data)
     {
         $EncryptionKey = base64_decode(self::$_encryption_key);
         $InitializationVector = openssl_random_pseudo_bytes(openssl_cipher_iv_length(self::$_encryption_algorithm));
@@ -33,7 +33,7 @@ class Hashing
         return base64_encode($EncryptedText . '::' . $InitializationVector);
     }
 
-    public static function Decrypt(string $cipher)
+    public static function decrypt(string $cipher)
     {
         $EncryptionKey = base64_decode(self::$_encryption_key);
         list($Encrypted_Data, $InitializationVector) = array_pad(explode('::', base64_decode($cipher), 2), 2, null);

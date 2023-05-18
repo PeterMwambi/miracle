@@ -1,0 +1,17 @@
+{
+    "username": {
+        "required": "Admin username is required",
+        "pattern": "Admin username can only contain letters or numbers",
+        "unique": "Admin username has already been registered"
+    },
+    "password": {
+        "required": "Admin password is required",
+        "pattern": "Admin password can contain only letters, numbers, or @ , & , # characters",
+        "min": "Admin password cannot be less than 6 characters",
+        "max": "Admin password cannot be more than 30 characters"
+    },
+    "confirm-password": {
+        "required": "Confirm admin password",
+        "matches": "Confirm password does not match password"
+    }
+}

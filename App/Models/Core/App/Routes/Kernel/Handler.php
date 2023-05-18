@@ -2,66 +2,75 @@
 
 namespace Models\Core\App\Routes\Kernel;
 
+use Controllers\Controller;
 use Exception;
 use Models\Auth\Sanitize;
+use Models\Core\App\Helpers\Formatter;
 
-
-final class Handler
+class Handler extends RouteGateway
 {
 
-    private $_url;
+    private $url;
 
-    private $_prefix;
+    private $prefix;
 
-    private $_request;
+    private $request;
 
 
     public function __construct()
     {
-        $this->_SetUrl();
-        $this->_SetPrefix();
+        $this->setUrl();
+        $this->setPrefix();
     }
 
-    private function _SetPrefix()
+    /**
+     * Summary of getPrefix
+     * @throws Exception
+     * @return mixed
+     */
+    private function getPrefix()
     {
-        $config = new Config;
-        $this->_prefix = $config->GetRoutePrefix();
+        if (isset($this->prefix)) {
+            return $this->prefix;
+        } else {
+            throw new Exception("Warning: URI prefix has not been set");
+        }
     }
 
-    public function GetRequest()
+    private function setPrefix()
     {
-        $this->_SetRequest();
-        return Sanitize::String(trim($this->_request));
+        $this->prefix = parent::getRoutePrefix();
+        return $this;
     }
 
-    private function _SetRequest()
+    protected function getRequest()
     {
-        $prefix = $this->_GetPrefix();
-        $url = $this->_GetUrl();
-        $this->_request = str_replace($prefix, "", $url["path"]);
+        $this->setRequest();
+        return Sanitize::String(trim($this->request));
     }
 
-    private function _SetUrl()
+    private function setRequest()
     {
-        $this->_url = parse_url($_SERVER["REQUEST_URI"]);
+        $url = $this->getUrl();
+        $this->request = str_replace(Formatter::formatToArray($this->getPrefix()), "", $url["path"]);
+        return;
     }
 
-    private function _GetUrl()
+    private function getUrl()
     {
-        if (count((array) $this->_url)) {
-            return $this->_url;
+        if (count((array) $this->url)) {
+            return $this->url;
         } else {
             throw new Exception("Warning: URI has not been set");
         }
     }
 
-    private function _GetPrefix()
+    private function setUrl()
     {
-        if (isset($this->_prefix)) {
-            return $this->_prefix;
-        } else {
-            throw new Exception("Warning: URI prefix has not been set");
-        }
+        $this->url = parse_url($_SERVER["REQUEST_URI"]);
+        return;
     }
+
+
 
 }

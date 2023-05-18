@@ -8,7 +8,7 @@ class Autoloader
 
     private static $instance = null;
 
-    public static function Start()
+    public static function start()
     {
         if (!isset(self::$instance)):
             self::$instance = new Autoloader;

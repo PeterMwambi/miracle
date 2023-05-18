@@ -5,28 +5,33 @@ namespace Models\Core\App\Database\Shell;
 use Exception;
 use Models\Core\App\Database\Kernel\Execute as ExecuteSQL;
 
-defined("ALLOW_DBQUERY_ACCESS") or Exit("Query Warning: You are not allowed to access this script");
 
 define("ALLOW_DBEXECUTE_ACCESS", TRUE);
 
 
 class Query extends ExecuteSQL
 {
-    public function RunSQL(string $sql, int $fetch, array $params = array())
+    public function runSQL(string $sql, int $fetch, array $params = array())
     {
-        parent::SetSQL($sql);
-        if (count($params)) {
-            parent::SetParams($params);
-            parent::BindStatementWithParams();
-        } else {
-            parent::BindStatement();
-        }
-        parent::SetFetchMode($fetch);
-        parent::ExecuteQuery();
+        parent::setSQL($sql);
+        $this->bindParams($params);
+        parent::setFetchMode($fetch);
+        parent::executeQuery();
     }
 
 
-    protected function BindSQL(string $action, string $table, null|int $fetch, array $where = array())
+    private function bindParams(array $params)
+    {
+        if (count($params)) {
+            parent::setParams($params);
+            parent::bindStatementWithParams();
+        } else {
+            parent::bindStatement();
+        }
+    }
+
+
+    protected function bindSQL(string $action, string $table, int $fetch, array $where = array())
     {
         $operators = array("=", "<", ">", "<=", ">=", "LIKE");
         $values = array();

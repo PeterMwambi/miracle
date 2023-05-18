@@ -1,0 +1,9 @@
+{
+    "storage": "Models\\Core\\App\\Cache\\Storage",
+    "register-attendant": "Models\\Core\\App\\Database\\Queries\\Create\\Attendant",
+    "login-attendant": "Models\\Core\\App\\Database\\Queries\\Read\\Attendant",
+    "register-client": "Models\\Core\\App\\Database\\Queries\\Create\\Client",
+    "login-client": "Models\\Core\\App\\Database\\Queries\\Read\\Client",
+    "register-admin": "Models\\Core\\App\\Database\\Queries\\Create\\Admin",
+    "login-admin": "Models\\Core\\App\\Database\\Queries\\Read\\Admin"
+}

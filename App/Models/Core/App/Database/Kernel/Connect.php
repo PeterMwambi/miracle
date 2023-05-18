@@ -8,7 +8,7 @@ use Models\Core\App\Database\Kernel\Config;
 use PDO;
 use PDOException;
 
-final class Connect
+final class Connect extends Config
 {
 
     private $conn;
@@ -17,16 +17,21 @@ final class Connect
 
     private static $instance;
 
+    private $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+    ];
+
 
     private function __construct()
     {
         try {
-            $config = new Config;
             $this->conn = new PDO(
-                "mysql:host=" . $config->GetHost() .
-                ";dbname=" . $config->GetDBName(),
-                $config->GetUsername(),
-                $config->GetPassword(),
+                "mysql:host=" . parent::host() .
+                ";dbname=" . parent::DBName(),
+                parent::username(),
+                parent::password(),
+                    $this->options
             );
         } catch (PDOException $e) {
             $this->message = $e->getMessage();
@@ -34,18 +39,18 @@ final class Connect
 
     }
 
-    public function GetLiveConnection()
+    public function getLiveConnection()
     {
         return $this->conn;
     }
 
 
-    public function GetConnectionErrorMessage()
+    public function getConnectionErrorMessage()
     {
         return $this->message;
     }
 
-    public function CheckConnection()
+    public function verifyConnection()
     {
         if (empty($this->message)) {
             return true;
@@ -53,7 +58,7 @@ final class Connect
         return false;
     }
 
-    public static function Start()
+    public static function start()
     {
         if (!isset(self::$instance)) {
             self::$instance = new Connect;

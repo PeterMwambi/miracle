@@ -29,26 +29,27 @@ class Execute
 
     public function __construct()
     {
-        $this->conn = ConnectSQL::Start()->GetLiveConnection();
+        $this->conn = ConnectSQL::start()->getLiveConnection();
     }
 
 
-    protected function SetSQL(string $sql)
+    protected function setSQL(string $sql)
     {
         $this->sql = $sql;
     }
 
-    protected function SetParams(array $params)
+    protected function setParams(array $params)
     {
         $this->params = $params;
     }
 
-    protected function SetFetchMode(int $fetch)
+    protected function setFetchMode(int $fetch)
     {
         $this->fetch = $fetch;
+        return $this;
     }
 
-    private function GetFetchMode()
+    private function getFetchMode()
     {
         if (isset($this->fetch)) {
             return $this->fetch;
@@ -57,7 +58,7 @@ class Execute
         }
     }
 
-    protected function GetSQL()
+    protected function getSQL()
     {
         if (isset($this->sql)) {
             return $this->sql;
@@ -66,7 +67,7 @@ class Execute
         }
     }
 
-    protected function GetParams()
+    protected function getParams()
     {
         if (count($this->params)) {
             return $this->params;
@@ -76,13 +77,13 @@ class Execute
     }
 
 
-    protected function BindStatement()
+    protected function bindStatement()
     {
-        $this->sql = $this->GetSQL();
+        $this->sql = $this->getSQL();
         $this->stmt = $this->conn->prepare($this->sql);
     }
 
-    protected function BindStatementWithParams()
+    protected function bindStatementWithParams()
     {
         if (count($this->params)) {
             $this->sql = $this->GetSQL();
@@ -98,14 +99,14 @@ class Execute
     }
 
 
-    protected function ExecuteQuery()
+    protected function executeQuery()
     {
         if (isset($this->stmt)) {
             $this->stmt->execute();
         }
     }
 
-    private function GetResults(string $options)
+    private function getResults(string $options)
     {
         switch ($this->GetFetchMode()) {
             case 0:
@@ -126,18 +127,18 @@ class Execute
 
     }
 
-    public function WriteCount()
+    public function writeCount()
     {
         $this->count = $this->stmt->rowCount();
     }
 
-    public function GetCount()
+    public function getCount()
     {
-        $this->WriteCount();
+        $this->writeCount();
         return $this->count;
     }
 
-    public function GetResultsAsArray()
+    public function getResultsAsArray()
     {
         $this->_results = $this->GetResults("array");
         if (!empty($this->_results)) {
@@ -147,7 +148,7 @@ class Execute
         }
     }
 
-    public function GetResultsAsObject()
+    public function getResultsAsObject()
     {
         $this->_results = $this->GetResults("object");
         if (!empty($this->_results)) {

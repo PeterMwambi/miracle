@@ -2,39 +2,39 @@
 
 namespace Models\Core\App\Database\Shell;
 
-
 class Insert extends Query
 {
 
-    private $_table;
+    private $table;
 
-    private $_fields;
+    private $data;
 
-    public function Table(string $table)
+    public function table(string $table)
     {
-        $this->_table = $table;
+        $this->table = $table;
     }
 
-    public function Fields(array $fields)
+    public function data(array $data)
     {
-        $this->_fields = $fields;
+        $this->data = $data;
     }
 
-    public function Execute()
+    public function execute()
     {
-        if (count($this->_fields)) {
-            $keys = array_keys($this->_fields);
+        if (count($this->data)) {
+            $keys = array_keys($this->data);
             $values = '';
             $x = 1;
-            foreach ($this->_fields as $field) {
+            foreach ($this->data as $data) {
                 $values .= '?';
-                if ($x < count($this->_fields)) {
+                if ($x < count($this->data)) {
                     $values .= ',';
                 }
                 $x++;
             }
-            $sql = "INSERT into {$this->_table} (`" . implode('`, `', $keys) . "`) VALUES({$values})";
-            $this->RunSQL($sql, 2, array_values($this->_fields));
+            $sql = "INSERT into {$this->table} (`" . implode('`, `', $keys) . "`) VALUES({$values})";
+            $this->RunSQL($sql, 2, array_values($this->data));
+            return true;
         }
         return false;
     }

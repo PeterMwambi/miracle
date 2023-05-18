@@ -16,26 +16,28 @@ use Models\Core\App\Utilities\Session;
 class Storage
 {
 
-    public static function StoreToCache(array $data)
+    public function storeToCache(array $data)
     {
-        Session::Start();
-        Session::Set("CACHE_DATA", $data, "array");
+        Session::start();
+        Session::set("CACHE_DATA", $data, "array");
         return;
     }
 
 
-    public static function GetCachedData()
+    public static function getFromCache()
     {
-        return Session::Get("CACHE_DATA");
+        if (empty($_SESSION)) {
+            Session::start();
+        }
+        return Session::get("CACHE_DATA");
     }
 
-    public static function ClearCacheData()
+    public static function clearCache()
     {
         Session::Start();
-        if (Session::Exists("CACHE_DATA")) {
-            Session::Destroy("CACHE_DATA");
+        if (Session::exists("CACHE_DATA")) {
+            Session::destroy("CACHE_DATA");
         }
-        Session::End();
         return;
     }
 }

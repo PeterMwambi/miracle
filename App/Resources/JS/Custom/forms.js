@@ -5,14 +5,6 @@
 
 "use strict";
 
-// function GetRoutePrefix() {
-//   fetch("/projects/fancyphp/app/Config/Routes/RoutePrefix.json")
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((data) => console.log(data));
-// }
-
 $(document).ready(function () {
   /**
    * @const url
@@ -29,32 +21,46 @@ $(document).ready(function () {
    * by the id html attribute
    */
   const forms = [
-    "registration-form-step-1",
-    "registration-form-step-2",
-    "registration-form-step-3",
-    "registration-form-step-4",
-    "registration-form-step-5",
-    "login-form-step-1",
-    "login-form-step-2",
+    "attendant-registration-form-step-1",
+    "attendant-registration-form-step-2",
+    "attendant-login-form",
+    "client-registration-form-step-1",
+    "client-registration-form-step-2",
+    "client-login-form",
+    "admin-registration-form-step-1",
+    "admin-registration-form-step-2",
+    "admin-login-form",
+    "service-registration-form-step-1",
+    "service-registration-form-step-2",
+    "client-payment-form",
+    "client-booking-form",
+    "attendant-payment-form",
   ];
 
-  const FcInputs = [
-    "firstname",
-    "lastname",
-    "county",
-    "sub-county",
-    "area",
-    "city",
-    "skills",
-    "bio",
-  ];
+  const fcInputs = ["firstname", "lastname", "name"];
+  const tlInputs = ["email"];
+  const formHelpText = "tutorspoint__help-text";
+  const formStepHeading = "tutorspoint__form-heading";
+  const alertIdentifier = "alert";
+  const buttonIdentifier = "button[type='submit']";
+  const alertHeading = "alert-heading";
+  const alertText = "alert-text";
+  const alertFootNote = "alert-footnote";
+  const spinnerButtonName = "btn-spinner";
+  const submitButtonName = "btn-info";
+  const progressBar = "progress";
+  const progressBarName = "progress-bar";
+  const completeSetUpInfoText = "complete-setup-info-text";
+  const completeSetUpFootNoteText = "complete-setup-footnote-text";
+  var formHandler = null;
+  const spinner = "spinner-grow";
 
   /**
    *
    * @param {string} identifier
    */
 
-  function SetToLowerCase(identifier) {
+  function setToLowerCase(identifier) {
     let item = $("input[name='" + identifier + "']");
     item.blur(function () {
       $(this).val(
@@ -63,7 +69,7 @@ $(document).ready(function () {
     });
   }
 
-  function CapitalizeFirstLetter(identifier) {
+  function capitalizeFirstLetter(identifier) {
     let item = $("input[name='" + identifier + "']");
     item.blur(function () {
       $(this).val(
@@ -77,19 +83,19 @@ $(document).ready(function () {
     });
   }
 
-  FcInputs.forEach(SetToLowerCase);
-  FcInputs.forEach(CapitalizeFirstLetter);
-
+  fcInputs.forEach(setToLowerCase);
+  fcInputs.forEach(capitalizeFirstLetter);
+  tlInputs.forEach(setToLowerCase);
   function RunAjaxQuery(identifier) {
     let item = $("#" + identifier);
     $(item).submit(function (e) {
       e.preventDefault();
-      ToggleAlertVisibility("hide", "alert");
-      ModifyHelpText(false, "teambp__form-helpText", "Please Wait");
-      DisableButton();
-      ToggleSpinnerVisibility("show");
-      ToggleButtonSpinner("show", "btn-spinner");
-      WriteButtonText(false, "btn-info", "Please Wait");
+      toggleAlertVisibility("hide", "alert");
+      modifyHelpText(false, "Please Wait");
+      disableButton();
+      toggleSpinnerVisibility("show");
+      toggleButtonSpinner("show");
+      writeButtonText(false, "Please Wait");
       setTimeout(() => {
         $.ajax({
           type: "post",
@@ -99,113 +105,284 @@ $(document).ready(function () {
           contentType: false,
           cache: false,
           processData: false,
+          error: function (response) {
+            toggleSpinnerVisibility("hide");
+            toggleButtonSpinner("hide");
+            modifyHelpText(true);
+            let feedback = response.responseJSON;
+            getErrorMessage(feedback.message);
+            writeButtonText(true);
+            enableButton();
+          },
           success: function (response) {
-            ToggleSpinnerVisibility("hide");
-            ToggleButtonSpinner("hide", "btn-spinner");
-            ModifyHelpText(true, "teambp__form-helpText");
-            if (response.flag === 0) {
-              GetErrorMessage(response.message, "alert");
-              WriteButtonText(true, "btn-info");
-              EnableButton();
-            } else {
-              if (response.flag === 1) {
-                GetSuccessMessage(response.message, "alert");
-                setTimeout(function () {
-                  ModifyHelpText(false, "teambp__form-helpText", "Please Wait");
-                  ToggleSpinnerVisibility("show");
-                }, 5000);
-                setTimeout(function () {
-                  ModifyHelpText(true, "teambp__form-helpText");
-                  ToggleSpinnerVisibility("hide");
-                  GoToNextStep(response.next);
-                }, 6000);
-              }
-            }
+            toggleSpinnerVisibility("hide");
+            toggleButtonSpinner("hide");
+            modifyHelpText(true);
+            setHandler(response.handler);
+            getSuccessMessage(response.message);
+            setTimeout(function () {
+              modifyHelpText(false, "Please Wait");
+              toggleSpinnerVisibility("show");
+            }, 5000);
+            setTimeout(function () {
+              modifyHelpText(true);
+              toggleSpinnerVisibility("hide");
+              goToNextStep(response.next);
+            }, 6000);
           },
         });
       }, 3000);
     });
   }
+
   forms.forEach(RunAjaxQuery);
 
-  function GoToNextStep(step) {
+  function attendantRegistrationStep2() {
+    hidePreviousStepForm("attendant-registration-form-step-1");
+    showNextStepForm("attendant-registration-form-step-2");
+    writeProgressBar(false, "100", "Step 2 out of 2");
+    writeFormStepHeading(false, "Step 2: Account Information");
+    writeButtonText(false, "Complete Setup");
+    enableButton();
+    return;
+  }
+
+  function serviceRegistrationStep2() {
+    hidePreviousStepForm("service-registration-form-step-1");
+    showNextStepForm("service-registration-form-step-2");
+    writeProgressBar(false, "100", "Step 2 out of 2");
+    writeFormStepHeading(false, "Step 2: Service Image");
+    writeButtonText(false, "Complete Setup");
+    enableButton();
+    return;
+  }
+
+  function clientRegistrationStep2() {
+    hidePreviousStepForm("client-registration-form-step-1");
+    showNextStepForm("client-registration-form-step-2");
+    writeProgressBar(false, "100", "Step 2 out of 2");
+    writeFormStepHeading(false, "Step 2: Account Information");
+    writeButtonText(false, "Complete Setup");
+    enableButton();
+    return;
+  }
+
+  function adminRegistrationStep2() {
+    hidePreviousStepForm("admin-registration-form-step-1");
+    showNextStepForm("admin-registration-form-step-2");
+    writeProgressBar(false, "100", "Step 2 out of 2");
+    writeFormStepHeading(false, "Step 2: Account Information");
+    writeButtonText(false, "Complete Setup");
+    enableButton();
+    return;
+  }
+
+  function goToNextStep(step) {
     switch (step) {
-      case "GoToLoginStep2":
-        HidePreviousStepForm("login-form-step-1");
-        ShowNextStepForm("login-form-step-2");
-        WriteProgressBar(false, "progress-bar", "100", "Step 2 out of 2");
-        WriteFormStepHeading(
-          false,
-          "teambp__form-stepHeading",
-          "Step 2: Security Information"
-        );
-        WriteButtonText(false, "btn-info", "Go to my account");
-        EnableButton();
+      case "go-to-attendant-registration-step-2":
+        attendantRegistrationStep2();
         break;
-      case "GoToRegistrationStep2":
-        HidePreviousStepForm("registration-form-step-1");
-        ShowNextStepForm("registration-form-step-2");
-        WriteProgressBar(false, "progress-bar", "50", "Step 2 out of 4");
-        WriteFormStepHeading(
-          false,
-          "teambp__form-stepHeading",
-          "Step 2: Contact Information"
-        );
-        WriteButtonText(false, "btn-info", "Go to step 3");
-        EnableButton();
+      case "go-to-service-registration-step-2":
+        serviceRegistrationStep2();
         break;
-      case "GoToRegistrationStep3":
-        HidePreviousStepForm("registration-form-step-2");
-        ShowNextStepForm("registration-form-step-3");
-        WriteProgressBar(false, "progress-bar", "75", "Step 3 out of 4");
-        WriteFormStepHeading(
-          false,
-          "teambp__form-stepHeading",
-          "Step 3: Skills And Competencies"
-        );
-        WriteButtonText(false, "btn-info", "Go to step 4");
-        EnableButton();
+      case "go-to-client-registration-step-2":
+        clientRegistrationStep2();
         break;
-      case "GoToRegistrationStep4":
-        HidePreviousStepForm("registration-form-step-3");
-        ShowNextStepForm("registration-form-step-4");
-        WriteProgressBar(false, "progress-bar", "100", "Step 4 out of 4");
-        WriteFormStepHeading(
-          false,
-          "teambp__form-stepHeading",
-          "Step 4: Account Information"
-        );
-        WriteButtonText(false, "btn-info", "Complete Setup");
-        EnableButton();
+      case "go-to-admin-registration-step-2":
+        adminRegistrationStep2();
         break;
-      case "GoToRegistrationStep5":
-        HidePreviousStepForm("registration-form-step-4");
-        ShowNextStepForm("registration-form-step-5");
-        WriteProgressBar(false, "progress-bar", "100", "Step 4 out of 4");
-        WriteFormStepHeading(
-          false,
-          "teambp__form-stepHeading",
-          "Step 4: Security Information"
-        );
-        WriteButtonText(false, "btn-info", "Complete Registration");
-        EnableButton();
-        break;
-      case "GoToFinalStep":
-        HidePreviousStepForm("login-form-step-2");
-        HidePreviousStepForm("registration-form-step-5");
-        ShowNextStepForm("complete-setup");
-        HideMultipleItemsByClassName([
-          "teambp__form-stepHeading",
-          "teambp__form-helpText",
-          "progress",
-          "teambp__formHelpAction",
-          "teambp__formFooter",
-        ]);
+      case "complete-setup":
+        completeSetup();
         break;
     }
   }
 
-  function WriteButtonText(defaultText = true, className, message) {
+  function redirectUser(page) {
+    setTimeout(function () {
+      window.location.href = page;
+    }, 2000);
+  }
+
+  function setHandler(handler = "") {
+    formHandler = handler;
+  }
+
+  function getHandler() {
+    return formHandler;
+  }
+
+  function setCompleteSetUpParams() {
+    showNextStepForm("complete-setup");
+    hideMultipleItemsByClassName([
+      formStepHeading,
+      formHelpText,
+      progressBar,
+      spinner,
+    ]);
+  }
+  function writeCompleteSetupInfoText(message = "") {
+    $("." + completeSetUpInfoText).html(message);
+  }
+
+  function writeCompleteSetupFootNoteText(message = "") {
+    $("." + completeSetUpFootNoteText).html(message);
+  }
+
+  /**
+   * attendant Registration form complete
+   * @return void
+   */
+  function completeAttendantRegistration() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("attendant-registration-form-step-2");
+    writeCompleteSetupInfoText(
+      "Attendant has been registered successfully. Redirecting you to attendants..."
+    );
+    writeCompleteSetupFootNoteText("Thank you for stopping by");
+    redirectUser("admin-attendants");
+  }
+
+  /**
+   * attendant login form complete
+   * @return void
+   */
+  function completeAttendantLogin() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("attendant-login-form");
+    writeCompleteSetupInfoText("Redirecting you to your account...");
+    writeCompleteSetupFootNoteText("Thank you for stopping by. Enjoy");
+    redirectUser("attendant-home");
+  }
+
+  /**
+   * client registration form complete
+   * @return void
+   */
+  function completeclientRegistration() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("client-registration-form-step-2");
+    writeCompleteSetupInfoText(
+      "Your account has been created successfully. You will be redirected to your profile shortly..."
+    );
+    writeCompleteSetupFootNoteText("Thank you for stopping by");
+    redirectUser("client-home");
+  }
+
+  /**
+   * client login form complete
+   * @return void
+   */
+  function completeclientLogin() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("client-login-form");
+    writeCompleteSetupInfoText("Redirecting you to your account...");
+    writeCompleteSetupFootNoteText("Thank you for stopping by. Enjoy");
+    redirectUser("client-home");
+  }
+
+  /**
+   * client login form complete
+   * @return void
+   */
+  function completeclientBooking() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("client-booking-form");
+    writeCompleteSetupInfoText(
+      "Booking requies was successful. Redirecting you to booking history..."
+    );
+    writeCompleteSetupFootNoteText("Thank you for stopping by. Enjoy");
+    redirectUser("client-bookings");
+  }
+  /**
+   * Admin registratio form complete
+   * @return void
+   */
+  function completeAdminRegistration() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("admin-registration-form-step-2");
+    writeCompleteSetupInfoText(
+      "Admininstrators account has been created successfully. You will be redirected to your profile shortly..."
+    );
+    writeCompleteSetupFootNoteText("Thank you for stopping by");
+    redirectUser("admin-home");
+  }
+
+  /**
+   * Admin registration form complete
+   * @return void
+   */
+  function completeAdminLogin() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("admin-login-form");
+    writeCompleteSetupInfoText("Redirecting you to your account...");
+    writeCompleteSetupFootNoteText("Thank you for stopping by. Enjoy");
+    redirectUser("admin-home");
+  }
+
+  /**
+   * Service registration form complete
+   * @return void
+   */
+  function completeServiceRegistration() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("service-registration-form-step-2");
+    writeCompleteSetupInfoText(
+      "Service has been added successfully. Redirecting you to services..."
+    );
+    writeCompleteSetupFootNoteText("Thank you for stopping by. Enjoy");
+    redirectUser("admin-services");
+  }
+
+  /**
+   * Client payment form complete
+   * @return void
+   */
+  function completePayment() {
+    setCompleteSetUpParams();
+    hidePreviousStepForm("client-payment-form");
+    writeCompleteSetupInfoText(
+      "Payment has been completed successfully. Redirecting you to payment history..."
+    );
+    writeCompleteSetupFootNoteText("Thank you for stopping by. Enjoy");
+    redirectUser("client-payments");
+  }
+
+  /**
+   * Complete form setup
+   * @return void
+   */
+  function completeSetup() {
+    switch (getHandler()) {
+      case "attendant-registration":
+        completeAttendantRegistration();
+        break;
+      case "attendant-login":
+        completeAttendantLogin();
+        break;
+      case "client-registration":
+        completeclientRegistration();
+        break;
+      case "client-login":
+        completeclientLogin();
+        break;
+      case "admin-registration":
+        completeAdminRegistration();
+        break;
+      case "admin-login":
+        completeAdminLogin();
+        break;
+      case "service-registration":
+        completeServiceRegistration();
+        break;
+      case "client-payment":
+        completePayment();
+        break;
+      case "client-booking":
+        completeclientBooking();
+    }
+  }
+
+  function writeButtonText(defaultText = true, message) {
     if (message === undefined) {
       var defaultButtonText = "Go to next step";
     } else {
@@ -213,62 +390,62 @@ $(document).ready(function () {
     }
     switch (defaultText) {
       case true:
-        $("." + className).html(defaultButtonText);
+        $("." + submitButtonName).html(defaultButtonText);
         break;
       case false:
-        $("." + className).html(message);
+        $("." + submitButtonName).html(message);
         break;
     }
   }
 
-  function ToggleButtonSpinner(flag, className) {
+  function toggleButtonSpinner(flag) {
     switch (flag) {
       case "show":
-        if ($("." + className).hasClass("d-none")) {
-          $("." + className).removeClass("d-none");
+        if ($("." + spinnerButtonName).hasClass("d-none")) {
+          $("." + spinnerButtonName).removeClass("d-none");
         }
         break;
       case "hide":
-        $("." + className).addClass("d-none");
+        $("." + spinnerButtonName).addClass("d-none");
         break;
     }
   }
 
-  function HideItemByClassName(classname) {
+  function hideItemByClassName(classname) {
     $("." + classname).addClass("d-none");
   }
 
-  function HideMultipleItemsByClassName(classname = []) {
-    classname.forEach(HideItemByClassName);
+  function hideMultipleItemsByClassName(classname = []) {
+    classname.forEach(hideItemByClassName);
   }
 
-  function DisableButton() {
-    $("button[type='submit']").attr("disabled", "disabled");
+  function disableButton() {
+    $(buttonIdentifier).attr("disabled", "disabled");
   }
 
-  function EnableButton() {
-    $("button[type='submit']").removeAttr("disabled");
+  function enableButton() {
+    $(buttonIdentifier).removeAttr("disabled");
   }
 
-  function WriteProgressBar(defaultText = true, className, width, message) {
-    let defaultProgressBarText = "Step 1 out of 4";
+  function writeProgressBar(defaultText = true, width, message) {
+    let defaultProgressBarText = "Step 1 out of 2";
     switch (defaultText) {
       case true:
-        $("." + className).html(defaultProgressBarText);
-        $("." + className).attr("style", "width:25%");
+        $("." + progressBarName).html(defaultProgressBarText);
+        $("." + progressBarName).attr("style", "width:25%");
         break;
       case false:
-        $("." + className).html(message);
-        $("." + className).attr("style", "width:" + width + "%;");
+        $("." + progressBarName).html(message);
+        $("." + progressBarName).attr("style", "width:" + width + "%;");
         break;
     }
   }
 
-  function HidePreviousStepForm(form) {
+  function hidePreviousStepForm(form) {
     $("#" + form).addClass("d-none");
   }
 
-  function ShowNextStepForm(form) {
+  function showNextStepForm(form) {
     $("#" + form)
       .removeClass("d-none")
       .hide();
@@ -277,74 +454,73 @@ $(document).ready(function () {
     }, 100);
   }
 
-  function GetErrorMessage(message, className) {
-    ToggleAlertVisibility("show", className);
-    ToggleAlertColor("danger", className);
-    WriteAlertMessage(message, "alert-text");
-    WriteAlertHeading(true, "alert-heading");
-    WriteAlertFootNote(true, "alert-footnote");
-    WriteAlertIcon("show", "error");
-    WriteAlertIcon("hide", "success");
-    FadeItem("." + className, 9000);
+  function getErrorMessage(message) {
+    toggleAlertVisibility("show");
+    toggleAlertColor("danger");
+    writeAlertMessage(message);
+    writeAlertHeading(true);
+    writeAlertFootNote(true);
+    writeAlertIcon("show", "error");
+    writeAlertIcon("hide", "success");
+    fadeItem("." + alertIdentifier, 9000);
   }
 
-  function GetSuccessMessage(message, className) {
-    ToggleAlertVisibility("show", className);
-    ToggleAlertColor("success", className);
-    WriteAlertMessage(message, "alert-text");
-    WriteAlertIcon("show", "success");
-    WriteAlertIcon("hide", "error");
-    WriteAlertHeading(false, "alert-heading", "Congratulations!");
-    WriteAlertFootNote(
+  function getSuccessMessage(message) {
+    toggleAlertVisibility("show");
+    toggleAlertColor("success");
+    writeAlertMessage(message);
+    writeAlertIcon("show", "success");
+    writeAlertIcon("hide", "error");
+    writeAlertHeading(false, "Congratulations!");
+    writeAlertFootNote(
       false,
-      "alert-footnote",
       "You will be redirected to the next step shortly"
     );
-    DisableButton();
-    FadeItem("." + className, 4000);
+    disableButton();
+    fadeItem("." + alertIdentifier, 4000);
   }
 
-  function WriteFormStepHeading(defaultText = true, className, message) {
+  function writeFormStepHeading(defaultText = true, message) {
     let defaultFormStepHeadingText = "Step 1: Personal Information";
     switch (defaultText) {
       case true:
-        $("." + className).html(defaultFormStepHeadingText);
+        $("." + formStepHeading).html(defaultFormStepHeadingText);
         break;
       case false:
-        $("." + className).html(message);
+        $("." + formStepHeading).html(message);
         break;
     }
   }
 
-  function WriteAlertMessage(message, alertClassName) {
-    $("." + alertClassName).html(message);
+  function writeAlertMessage(message) {
+    $("." + alertText).html(message);
   }
 
-  function WriteAlertFootNote(defaultText = true, className, message) {
+  function writeAlertFootNote(defaultText = true, message) {
     let defaultAlertFootNoteText = "Please correct the field then try again";
     switch (defaultText) {
       case true:
-        $("." + className).html(defaultAlertFootNoteText);
+        $("." + alertFootNote).html(defaultAlertFootNoteText);
         break;
       case false:
-        $("." + className).html(message);
+        $("." + alertFootNote).html(message);
         break;
     }
   }
 
-  function WriteAlertHeading(defaultText = true, alertClassName, message) {
+  function writeAlertHeading(defaultText = true, message) {
     let defaultAlertText = "Oops! We run into an error";
     switch (defaultText) {
       case true:
-        $("." + alertClassName).html(defaultAlertText);
+        $("." + alertHeading).html(defaultAlertText);
         break;
       case false:
-        $("." + alertClassName).html(message);
+        $("." + alertHeading).html(message);
         break;
     }
   }
 
-  function WriteAlertIcon(action, className) {
+  function writeAlertIcon(action, className) {
     switch (action) {
       case "show":
         $("." + className).removeClass("d-none");
@@ -355,7 +531,7 @@ $(document).ready(function () {
     }
   }
 
-  function ToggleSpinnerVisibility(action) {
+  function toggleSpinnerVisibility(action) {
     switch (action) {
       case "show":
         $(".spinner").removeClass("d-none");
@@ -366,18 +542,18 @@ $(document).ready(function () {
     }
   }
 
-  function ToggleAlertColor(flag, alertClassName) {
+  function toggleAlertColor(flag) {
     switch (flag) {
       case "success":
-        if ($("." + alertClassName).hasClass("alert-danger")) {
-          $("." + alertClassName)
+        if ($("." + alertIdentifier).hasClass("alert-danger")) {
+          $("." + alertIdentifier)
             .removeClass("alert-danger")
             .addClass("alert-success");
         }
         break;
       case "danger":
-        if ($("." + alertClassName).hasClass("alert-success")) {
-          $("." + alertClassName)
+        if ($("." + alertIdentifier).hasClass("alert-success")) {
+          $("." + alertIdentifier)
             .removeClass("alert-success")
             .addClass("alert-danger");
         }
@@ -385,40 +561,40 @@ $(document).ready(function () {
     }
   }
 
-  function ToggleAlertVisibility(action, alertClassName) {
+  function toggleAlertVisibility(action) {
     switch (action) {
       case "show":
-        if ($("." + alertClassName).hasClass("d-none")) {
-          $("." + alertClassName).removeClass("d-none");
+        if ($("." + alertIdentifier).hasClass("d-none")) {
+          $("." + alertIdentifier).removeClass("d-none");
         }
         break;
       case "hide":
-        $("." + alertClassName).addClass("d-none");
+        $("." + alertIdentifier).addClass("d-none");
         break;
     }
   }
 
-  function ModifyHelpText(defaultText = true, helpTextClassName = "", message) {
+  function modifyHelpText(defaultText = true, message) {
     let defaultHelpText = "Required fields are marked by *";
     switch (defaultText) {
       case true:
-        $("." + helpTextClassName).html(defaultHelpText);
+        $("." + formHelpText).html(defaultHelpText);
         break;
       case false:
-        $("." + helpTextClassName).html(message);
+        $("." + formHelpText).html(message);
         break;
     }
   }
 
-  function FadeItem(item, timer) {
+  function fadeItem(item, timer) {
     setTimeout(function () {
       $(item).addClass("d-none");
     }, timer);
   }
 
-  TogglePasswordVisibility("password-switch", "password-visibility-toggle");
+  togglePasswordVisibility("password-switch", "password-visibility-toggle");
 
-  function TogglePasswordVisibility(parent, child) {
+  function togglePasswordVisibility(parent, child) {
     $("." + parent).click(function () {
       if ($(this).prop("checked") === true) {
         $("." + child).attr("type", "text");
@@ -429,4 +605,34 @@ $(document).ready(function () {
       }
     });
   }
+
+  function logout() {
+    $(".logout").click(function (e) {
+      e.preventDefault();
+      $(this).html("Please wait...");
+      setTimeout(function () {
+        redirectUser("logout");
+      }, 2000);
+    });
+  }
+  logout();
+
+  function hideDiscountAlert() {
+    setTimeout(function () {
+      $(".discount-redeem").addClass("d-none");
+    }, 3000);
+  }
+
+  hideDiscountAlert();
 });
+
+function changeCarouselImageToBkImage(imageClass, bkItemClass) {
+  const image = document.getElementsByClassName(imageClass);
+  const carouselItem = document.getElementsByClassName(bkItemClass);
+  for (var x = 0; x <= image.length - 1; x++) {
+    carouselItem[x].style.backgroundImage =
+      "url('" + image[x].getAttribute("src") + "')";
+  }
+}
+
+changeCarouselImageToBkImage("carousel-image", "carousel-item");

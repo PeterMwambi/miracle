@@ -1,1 +1,198 @@
-{}
+{
+    "home": {
+        "methods": [
+            "GET"
+        ],
+        "function": "Homepage"
+    },
+    "services": {
+        "methods": [
+            "GET"
+        ],
+        "function": "Services"
+    },
+    "logout": {
+        "methods": [
+            "GET"
+        ],
+        "function": "Logout"
+    },
+    "sandbox": {
+        "methods": [
+            "GET"
+        ],
+        "function": "Sandbox"
+    },
+    "client-home": {
+        "methods": [
+            "GET"
+        ],
+        "function": "ClientViews"
+    },
+    "client-payments": {
+        "methods": [
+            "GET"
+        ],
+        "function": "ClientViews"
+    },
+    "client-services": {
+        "methods": [
+            "GET"
+        ],
+        "function": "ClientViews"
+    },
+    "client-registration": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "ClientForms"
+    },
+    "client-bookings": {
+        "methods": [
+            "GET"
+        ],
+        "function": "ClientViews"
+    },
+    "client-discounts": {
+        "methods": [
+            "GET"
+        ],
+        "function": "ClientViews"
+    },
+    "client-booking": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "ClientForms"
+    },
+    "client-login": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "ClientForms"
+    },
+    "client-payment": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "ClientForms"
+    },
+    "admin-registration": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "AdminForms"
+    },
+    "admin-attendant-registration": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "AdminForms"
+    },
+    "admin-service-registration": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "AdminForms"
+    },
+    "admin-login": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "AdminForms"
+    },
+    "admin-home": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AdminViews"
+    },
+    "admin-payments": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AdminViews"
+    },
+    "admin-clients": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AdminViews"
+    },
+    "admin-attendants": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AdminViews"
+    },
+    "admin-administrators": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AdminViews"
+    },
+    "admin-bookings": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AdminViews"
+    },
+    "admin-services": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AdminViews"
+    },
+    "attendant-home": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AttendantViews"
+    },
+    "attendant-services": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AttendantViews"
+    },
+    "attendant-payments": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AttendantViews"
+    },
+    "attendant-clients": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AttendantViews"
+    },
+    "attendant-registration": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "AttendantForms"
+    },
+    "attendant-login": {
+        "methods": [
+            "GET",
+            "POST"
+        ],
+        "function": "AttendantForms"
+    },
+    "attendant-bookings": {
+        "methods": [
+            "GET"
+        ],
+        "function": "AttendantViews"
+    }
+}

@@ -12,21 +12,24 @@ class Delete extends Query
 
     private $_where;
 
-    public function Table(string $table)
+    public function table(string $table)
     {
         $this->_table = $table;
     }
 
-    public function Where(array $where)
+    public function where(array $where)
     {
         $this->_where = $where;
     }
 
-    public function Execute()
+    public function execute()
     {
         if (count($this->_where) === 3) {
-            return $this->BindSQL("DELETE", $this->_table, 2, $this->_where);
+            $this->BindSQL("DELETE", $this->_table, 2, $this->_where);
+            return true;
+        } else {
+            $this->BindSQL("DELETE", $this->_table, 2);
+            return true;
         }
-        return $this->BindSQL("DELETE", $this->_table, 2);
     }
 }

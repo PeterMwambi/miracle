@@ -19,7 +19,7 @@ class Input
      * Checks if the form has been submitted via GET 
      * or POST Method and returns the method of submission
      */
-    public static function GetData($type = "post")
+    public static function getData($type = "post")
     {
         switch ($type) {
             case 'get':
@@ -38,7 +38,7 @@ class Input
      * Gets input from post or get data
      */
 
-    public static function Get($data)
+    public static function get($data)
     {
         switch ($data) {
             case isset($_POST[$data]):

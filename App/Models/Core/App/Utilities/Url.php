@@ -1,7 +1,7 @@
 <?php
 namespace Models\Core\App\Utilities;
 
-use Models\Core\App\Routes\Kernel\Config as RoutePrefixConfig;
+use Models\Core\App\Routes\Kernel\RouteGateway as RoutePrefixConfig;
 use Exception;
 
 
@@ -17,7 +17,7 @@ class Url
 {
 
 
-    public static function GetPath(string $filePath)
+    public static function getPath(string $filePath)
     {
         $directories = array("../../", "../", "../../../../", "./");
         foreach ($directories as $directory) {
@@ -29,9 +29,9 @@ class Url
         }
     }
 
-    public static function GetReference(string $filepath)
+    public static function getReference(string $filepath)
     {
         $routeprefix = new RoutePrefixConfig;
-        return $routeprefix->GetRoutePrefix() . $filepath;
+        return $routeprefix->GetRoutePrefix()->routeprefix . $filepath;
     }
 }

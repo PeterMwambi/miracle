@@ -9,76 +9,190 @@ class DataTypes extends Writer
 {
 
 
-    private $_string;
+    private $string;
 
 
-    private $_objectBoundary;
+    private $objectBoundary;
 
-    private function _WriteObjectFromString(string $string)
+    private $formatterKeys = array();
+
+    private $formattedResult = null;
+
+    private function writeObjectFromString(string $string)
     {
-        $this->_string = $string;
+        $this->string = $string;
         return;
     }
 
 
-    private function _GetObjectFromString()
+    private function getObjectFromString()
     {
-        if (!empty($this->_string)) {
-            return $this->_string;
+        if (!empty($this->string)) {
+            return $this->string;
         } else {
             throw new Exception("Warning: Object caller string has not been defined");
         }
     }
 
-    private function _WriteObjectBoundary()
+    private function writeObjectBoundary()
     {
-        $this->_objectBoundary = explode("/", $this->_GetObjectFromString());
+        $this->objectBoundary = explode("/", $this->getObjectFromString());
+        return $this;
     }
 
-    private function _GetObjectBoundary()
+    private function getObjectBoundary()
     {
-        if (count($this->_objectBoundary)) {
-            return $this->_objectBoundary;
+        if (count($this->objectBoundary)) {
+            return $this->objectBoundary;
         } else {
             throw new Exception("Warning: Object boundary array has not been defined");
         }
     }
 
-    private function _Format(string $string, array $keys)
+    private function format(string $string, array $keys)
     {
-        $this->_WriteObjectFromString($string);
-        $this->_WriteObjectBoundary();
-        return parent::RunArrayWriter($this->_GetObjectBoundary(), $keys);
+        $this->writeObjectFromString($string);
+        $this->writeObjectBoundary();
+        return parent::runArrayWriter($this->getObjectBoundary(), $keys);
     }
 
 
-    protected function SetString(string $string)
+    protected function setString(string $string)
     {
-        $this->_string = $string;
+        $this->string = $string;
+        return $this;
     }
 
-    private function _GetString()
+    public static function formatToArray(mixed $data)
     {
-        if (!empty($this->_string)) {
-            return $this->_string;
+        return ((array) $data);
+    }
+
+    public static function formatToObject(array $array)
+    {
+        return ((object) $array);
+    }
+
+    private function getString()
+    {
+        if (!empty($this->string)) {
+            return $this->string;
         } else {
             throw new Exception("Warning: Object String has not been defined");
         }
     }
 
-    protected function RunFormatter(array $keys = [])
+    protected function runFormatter(string $type = "")
     {
-        $array = count($keys) ? $keys : ["class", "method"];
-        return ((object) $this->_Format($this->_GetString(), $array));
+        $array = count($this->getFormatterKeys()) ? $this->getFormatterKeys() : ["class", "method"];
+        switch ($type) {
+            case "object":
+                $this->setFormattedResult(self::formatToObject($this->format($this->getString(), $array)));
+                return self::formatToObject($this->format($this->getString(), $array));
+            case "array":
+                $this->setFormattedResult(self::formatToArray($this->format($this->getString(), $array)));
+                return self::formatToArray($this->format($this->getString(), $array));
+        }
+        ;
     }
-    public function GetClass()
+    public function getClass()
     {
-        return $this->RunFormatter()->class;
+        return $this->getFormattedResult()->class;
     }
 
-    public function GetMethod()
+    public function getMethod()
     {
-        return $this->RunFormatter()->method;
+        return $this->getFormattedResult()->method;
     }
 
+
+    /**
+     * @return array
+     */
+    public function getFormatterKeys()
+    {
+        return $this->formatterKeys;
+    }
+
+    /**
+     * @param array $formatterKeys 
+     * @return self
+     */
+    public function setFormatterKeys(array $formatterKeys): self
+    {
+        $this->formatterKeys = $formatterKeys;
+        return $this;
+    }
+
+    public static function verifyProperty(object $object_or_class, string $string)
+    {
+        if (property_exists($object_or_class, $string)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function verifyClass(string $class)
+    {
+        if (class_exists($class)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function verifyMethod(object $class, string $method)
+    {
+        if (method_exists($class, $method)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function verifyArrayKey(string $key, array $array, )
+    {
+        if (array_key_exists($key, $array)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function verifyInArray(string $key, array $array)
+    {
+        if (in_array($key, $array)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function verifyFunction(string $function)
+    {
+        if (function_exists($function)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return array|object
+     */
+    private function getFormattedResult()
+    {
+        return $this->formattedResult;
+    }
+
+    /**
+     * @param mixed $formattedResult 
+     * @return self
+     */
+    private function setFormattedResult(mixed $formattedResult): self
+    {
+        $this->formattedResult = $formattedResult;
+        return $this;
+    }
 }

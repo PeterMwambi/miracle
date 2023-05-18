@@ -1,0 +1,24 @@
+{
+    "username": {
+        "required": true,
+        "pattern": "string-with-numbers",
+        "unique": true,
+        "exists": true,
+        "table": "attendant_account_info",
+        "column": "at_username",
+        "method": "username"
+    },
+    "password": {
+        "required": true,
+        "pattern": "string-with-numbers-and-selected-characters",
+        "unique": true,
+        "exists": true,
+        "identifier": "username",
+        "table": "attendant_account_info",
+        "column": {
+            "search": "at_password",
+            "identifier": "at_username"
+        },
+        "method": "password"
+    }
+}

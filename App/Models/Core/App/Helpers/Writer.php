@@ -8,76 +8,76 @@ use Exception;
 class Writer
 {
 
-    private $_array = array();
+    private $array = array();
 
-    private $_keys = array();
+    private $keys = array();
 
-    private $_newKeys = array();
+    private $newKeys = array();
 
 
-    private function _SetArray(array $array)
+    private function setArray(array $array)
     {
-        $this->_array = $array;
+        $this->array = $array;
     }
 
 
-    private function _GetArray()
+    private function getArray()
     {
-        if (count($this->_array)) {
-            return $this->_array;
+        if (count($this->array)) {
+            return $this->array;
         } else {
             throw new Exception("Warning: Array has not been defined");
         }
     }
 
 
-    private function _WriteArrayKeys()
+    private function writeArrayKeys()
     {
-        $this->_keys = array_keys($this->_GetArray());
+        $this->keys = array_keys($this->getArray());
     }
 
-    private function _GetArrayKeys()
+    private function getArrayKeys()
     {
-        if (count($this->_keys)) {
-            return $this->_keys;
+        if (count($this->keys)) {
+            return $this->keys;
         } else {
             throw new Exception("Warning: Array keys have not been defined");
         }
     }
 
-    private function _WriteNewArrayKeys(array $keys)
+    private function writeNewArrayKeys(array $keys)
     {
-        $this->_newKeys = $keys;
+        $this->newKeys = $keys;
     }
 
 
-    private function _GetNewArrayKeys()
+    private function getNewArrayKeys()
     {
-        if (count($this->_newKeys)) {
-            return $this->_newKeys;
+        if (count($this->newKeys)) {
+            return $this->newKeys;
         } else {
             throw new Exception("Warning: No new array keys were defined");
         }
     }
 
-    private function _ReplaceOldArrayKeysWithNew()
+    private function replaceOldArrayKeysWithNew()
     {
-        $this->_keys = array_replace($this->_GetArrayKeys(), $this->_GetNewArrayKeys());
+        $this->keys = array_replace($this->getArrayKeys(), $this->getNewArrayKeys());
     }
 
-    private function _GetNewArray()
+    private function getNewArray()
     {
-        $this->_ReplaceOldArrayKeysWithNew();
-        return (array_combine($this->_GetArrayKeys(), array_values($this->_GetArray())));
+        $this->replaceOldArrayKeysWithNew();
+        return (array_combine($this->getArrayKeys(), array_values($this->getArray())));
     }
 
 
-    public function RunArrayWriter(array $array, array $keys)
+    public function runArrayWriter(array $array, array $keys)
     {
-        $this->_SetArray($array);
-        $this->_WriteArrayKeys();
-        $this->_WriteNewArrayKeys($keys);
-        return $this->_GetNewArray();
+        $this->setArray($array);
+        $this->writeArrayKeys();
+        $this->writeNewArrayKeys($keys);
+        return $this->getNewArray();
     }
 
 

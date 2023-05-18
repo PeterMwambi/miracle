@@ -2,52 +2,86 @@
 
 namespace Models\Core\App\Dependancies;
 
-use Models\Core\App\Utilities\Url;
+/**
+ * @author Peter Mwambi <calebmwambi@gmail.com>
+ * @version miracle v1.2.0
+ */
 
-class Settings extends Loadjson
+class Settings extends Dependancies
 {
-
-
-
-    protected function GetDBSettings(string $filename)
+    /**
+     * Summary of connectToDB
+     * @return object
+     */
+    protected function connectToDB()
     {
-        return parent::GetSettings($filename, "database");
+        return parent::dependancy("database/database-connection");
     }
 
 
-    protected function GetValidationRulesFromJSON(string $filename)
+    /**
+     * Summary of validationRules
+     * @param string $fileIdentifiers
+     * @return object
+     */
+    protected function validationRules(string $fileIdentifiers)
     {
-        return parent::GetSettings($filename, "rules");
+        return parent::dependancy("rules/" . $fileIdentifiers);
     }
 
-    protected function GetValidationErrorsFromJSON(string $filename)
+    /**
+     * Summary of validationErrors
+     * @param string $fileIdentifiers
+     * @return object
+     */
+    protected function validationErrors(string $fileIdentifiers)
     {
-        return parent::GetSettings($filename, "errors");
-    }
-    protected function GetRouteSettings(string $filename)
-    {
-        return parent::GetSettings($filename, "routes");
-    }
-
-    protected function GetFormKeys(string $filename)
-    {
-        return (parent::GetSettings($filename, "forms"));
+        return parent::dependancy("errors/" . $fileIdentifiers);
     }
 
-    protected function GetFormSettingsFromJSON(string $filename)
+    /**
+     * Summary of routes
+     * @return object
+     */
+    protected function routes()
     {
-        return (parent::GetSettings($filename, "forms"));
+        return parent::dependancy("routes/routes");
     }
 
-    protected function GetFormDataFromJSON(string $filename)
+    /**
+     * Summary of routePrefix
+     * @return object
+     */
+    protected function routePrefix()
     {
-        return (parent::GetSettings($filename, "forms"));
-    }
-    protected function GetValidationKeywordsFromJSON(string $filename)
-    {
-        return parent::GetSettings($filename, "forms");
+        return parent::dependancy("routes/route-prefix");
     }
 
+    /**
+     * Summary of formRegister
+     * @return object
+     */
+    protected function formRegister()
+    {
+        return parent::dependancy("forms/register");
+    }
 
+    /**
+     * Summary of formSettings
+     * @return object
+     */
+    protected function formSettings()
+    {
+        return parent::dependancy("forms/settings");
+    }
+
+    /**
+     * Summary of formData
+     * @return object
+     */
+    protected function formData()
+    {
+        return parent::dependancy("forms/data");
+    }
 
 }

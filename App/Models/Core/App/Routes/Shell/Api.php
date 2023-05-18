@@ -6,7 +6,7 @@ namespace Models\Core\App\Routes\Shell;
 class Api
 {
 
-    public static function RunService()
+    public static function runService()
     {
         $route = new Dispatch;
         if ($route->VerifyRoute() && $route->VerifyRequest()) {

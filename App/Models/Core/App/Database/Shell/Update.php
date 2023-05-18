@@ -2,7 +2,6 @@
 
 namespace Models\Core\App\Database\Shell;
 
-define("ALLOW_DBQUERY_ACCESS", true);
 class Update extends Query
 {
 
@@ -14,22 +13,22 @@ class Update extends Query
     private $_where;
 
 
-    public function Table(string $table)
+    public function table(string $table)
     {
         $this->_table = $table;
     }
 
-    public function Set(array $field)
+    public function set(array $field)
     {
         $this->_fields = $field;
     }
 
-    public function Where(array $where)
+    public function where(array $where)
     {
         $this->_where = $where;
     }
 
-    public function Execute()
+    public function execute()
     {
         if (count($this->_fields)) {
             $set = "";

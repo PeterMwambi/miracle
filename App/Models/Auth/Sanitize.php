@@ -13,22 +13,22 @@ namespace Models\Auth;
 class Sanitize
 {
 
-    public static function String($data)
+    public static function string($data)
     {
         $data = filter_var(trim($data), FILTER_SANITIZE_SPECIAL_CHARS);
         return $data;
     }
-    public static function Int($data)
+    public static function int($data)
     {
         $data = filter_var($data, FILTER_VALIDATE_INT);
         return $data;
     }
-    public static function Bool($data)
+    public static function bool($data)
     {
         $data = filter_var($data, FILTER_VALIDATE_BOOLEAN);
         return $data;
     }
-    public static function Email($email)
+    public static function email($email)
     {
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         return $email;

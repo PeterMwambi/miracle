@@ -4,6 +4,7 @@ namespace Models\Core\App\Routes\Shell;
 
 use Exception;
 use Models\Auth\Input;
+use Models\Core\App\Helpers\Formatter;
 use Models\Core\App\Routes\Kernel\Config;
 use Models\Core\App\Routes\Kernel\Handler;
 
@@ -16,38 +17,30 @@ use Models\Core\App\Routes\Kernel\Handler;
  */
 class Dispatch extends Register
 {
+    private $request;
+
+    private $routes;
+
+    private $route;
 
 
-    private $_handler;
-
-    private $_request;
-
-    private $_routes;
-
-    private $_route;
-
-
-    public function __construct()
+    public function verifyRoute()
     {
-        $this->_handler = new Handler;
-    }
-    public function VerifyRoute()
-    {
-        $this->_request = $this->_GetRequest();
-        $this->_routes = $this->_GetRoutes();
-        if (array_key_exists($this->_request, (array) $this->_routes)) {
-            $request = $this->_request;
-            $this->_SetRouteParams($this->_routes->$request);
+        $this->request = $this->GetRequest();
+        $this->routes = $this->GetRoutes();
+        if (Formatter::verifyArrayKey($this->request, (array) $this->routes)) {
+            $request = $this->request;
+            $this->setRouteParams($this->routes->$request);
             return true;
         } else {
-            $this->_SetResponseCode(404);
+            $this->setResponseCode(404);
             return false;
         }
     }
 
-    public function VerifyRequest()
+    public function verifyRequest()
     {
-        $methods = $this->_GetRouteMethods();
+        $methods = $this->getRouteMethods();
         if (in_array($_SERVER["REQUEST_METHOD"], $methods)) {
             return true;
         } else {
@@ -55,90 +48,87 @@ class Dispatch extends Register
         }
     }
 
-    public function VerifyParams(string $param, string $paramName)
+    public function verifyParams(string $param, string $paramName)
     {
-        $getParams = $this->_GetRouteRequestParams($paramName);
-        foreach (Input::GetParams($param) as $param) {
-            if (!array_key_exists($param, $getParams)) {
-                $this->_SetResponseCode(400);
+        $getParams = $this->getRouteRequestParams($paramName);
+        foreach (Input::getParams($param) as $param) {
+            if (!Formatter::verifyArrayKey($param, $getParams)) {
+                $this->SetResponseCode(400);
                 throw new Exception("Warning: {$param} does not exist");
             }
         }
     }
 
 
-    public function ProcessRoute()
+    public function processRoute()
     {
-        $method = "Get" . $this->_GetRouteFunction();
-        if (method_exists($this, $method)) {
+        $method = "Get" . $this->getRouteFunction();
+        if (Formatter::verifyMethod($this, $method)) {
             return $this->$method();
         }
     }
 
 
-    public function RedirectTo404()
+    public function redirectTo404()
     {
-        if ($this->_GetResponseCode() === 404) {
+        if ($this->GetResponseCode() === 404) {
             parent::Get404page();
         } else {
-            throw new Exception("Warning: Call to an uncalled response" . $this->_GetResponseCode());
+            throw new Exception("Warning: Call to an uncalled response" . $this->GetResponseCode());
         }
     }
 
 
-    private function _GetRequest()
+    public function getRequest()
     {
-        return $this->_handler->GetRequest();
+        return parent::getRequest();
     }
 
-    private function _GetRoutes()
+    protected function getRoutes()
     {
-        $config = new Config;
-        return $config->GetRouteConfig();
+        return parent::getRouteConfig();
     }
-
-
 
 
     /**
-     * Summary of _GetRouteParams
+     * Summary of GetRouteParams
      * @return object
      */
-    private function _GetRouteParams()
+    private function getRouteParams()
     {
-        if (isset($this->_route)) {
-            return $this->_route;
+        if (isset($this->route)) {
+            return $this->route;
         } else {
             throw new Exception("Warning: Route has not been set");
         }
     }
 
-    private function _SetRouteParams(mixed $route)
+    private function setRouteParams(mixed $route)
     {
-        $this->_route = $route;
+        $this->route = $route;
     }
 
 
-    private function _GetRouteMethods()
+    private function getRouteMethods()
     {
-        return $this->_GetRouteParams()->methods;
+        return $this->getRouteParams()->methods;
     }
 
-    private function _GetRouteFunction()
+    private function getRouteFunction()
     {
-        return ($this->_GetRouteParams()->function);
+        return $this->getRouteParams()->function;
     }
 
-    private function _GetRouteRequestParams(string $paramName)
+    private function getRouteRequestParams(string $paramName)
     {
-        return $this->_GetRouteParams()->$paramName;
+        return $this->getRouteParams()->$paramName;
     }
-    private function _SetResponseCode(int $code)
+    private function setResponseCode(int $code)
     {
         return http_response_code($code);
     }
 
-    private function _GetResponseCode()
+    private function getResponseCode()
     {
         return http_response_code();
     }

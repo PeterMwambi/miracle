@@ -3,43 +3,97 @@
 namespace Models\Core\Services\Ajax\Kernel;
 
 use Controllers\Controller;
+use Exception;
 use Models\Auth\Hashing;
 
 class Security extends Controller
 {
 
-    private $_formIdentifier;
+    /**
+     * Summary of formIdentifier
+     * @var string
+     */
+    private $formIdentifier;
 
-    private $_form;
 
-
-
-    public function SetFormIdentifier(string $identifier)
+    /**
+     * Summary of formIdentifier
+     * @return string
+     */
+    private function getFormIdentifier()
     {
-        parent::WriteAllowedKeys();
-        $this->_formIdentifier = $identifier;
+        if (!empty($this->formIdentifier)) {
+            return $this->formIdentifier;
+        } else {
+            throw new Exception("Warning: Form identifier has not been defined");
+        }
     }
-    private function _DecryptedFormIdentifier()
+
+    /**
+     * Summary of formIdentifier
+     * @param string $formIdentifier Summary of formIdentifier
+     * @return self
+     */
+    private function setFormIdentifier(string $formIdentifier): self
     {
-        $this->_formIdentifier = Hashing::Decrypt($this->_formIdentifier);
-        return $this->_formIdentifier;
+        $this->formIdentifier = $formIdentifier;
+        return $this;
     }
-    public function VerifyFormIdentifier()
+
+
+    /**
+     * Summary of decryptFormIdentifer
+     * @return Security
+     */
+    private function decryptFormIdentifer()
     {
-        $identifier = $this->_DecryptedFormIdentifier();
-        $identifiers = parent::GetAllowedKeys();
-        if (array_key_exists($identifier, (array) $identifiers)) {
-            $this->_form = $identifiers->$identifier;
+        $this->setFormIdentifier(Hashing::decrypt($this->getFormIdentifier()));
+        return $this;
+    }
+
+
+    /**
+     * Summary of verifyFormIdentifier
+     * @return bool
+     */
+    private function verifyFormIdentifier()
+    {
+        parent::setFormRegister();
+        $this->decryptFormIdentifer();
+        if (property_exists(parent::getFormRegister(), $this->getFormIdentifier())) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function GetForm()
+    /**
+     * Summary of getFormFromIdentifier
+     * @return mixed
+     */
+    private function getFormFromIdentifier()
     {
-        return $this->_form;
+        $formRegister = parent::getFormRegister();
+        $formIdentifier = $this->getFormIdentifier();
+        return $formRegister->$formIdentifier;
     }
 
+    /**
+     * Summary of runService
+     * @param string $identifier
+     * @throws Exception
+     * @return bool
+     */
+    protected function runSecurityService(string $identifier)
+    {
+        $this->setFormIdentifier($identifier);
+        if ($this->verifyFormIdentifier()) {
+            parent::setForm($this->getFormFromIdentifier());
+            return true;
+        } else {
+            throw new Exception("Warning: Invalid identifier");
+        }
+
+    }
 
 }

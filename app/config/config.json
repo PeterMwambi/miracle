@@ -1,0 +1,17 @@
+{
+    "app": {
+        "name": "APP_CONFIGURATION_SETTINGS",
+        "type": "php",
+        "path": "app/config/app.php"
+    },
+    "server": {
+        "name": "SERVER_CONFIGURATION_SETTINGS",
+        "type": "php",
+        "path": "app/config/server.php"
+    },
+    "validation": {
+        "name": "VALIDATION_CONFIGURATION_SETTINGS",
+        "type": "php",
+        "path": "app/config/validation.php"
+    }
+}

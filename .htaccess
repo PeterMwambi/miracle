@@ -1,16 +1,56 @@
+##########################################################################################
+## BEGIN APACHE HTACCESS REWRITE SERVICE HANDLERS
+##########################################################################################
+
+
+# Begin Rewrite Engine
 RewriteEngine on
-RewriteBase /sandbox/miracle
+
+
+# The Document Root Folder
+### Change this to the root folder name of your application
+RewriteBase /miracle
+
+
+##########################################################################################
+## BEGIN APP GENERATED SERVICE HANDLERS
+##
+## DO NOT CHANGE THE CONFIGURATIONS IN THIS SECTION !!!!
+## IT MAY CAUSE YOUR APPLICATION TO BREAK OR BEHAVE UNEXPECTEDLY
+##
+##########################################################################################
+
+
+# Redirect all requests to public folder
+# RewriteCond %{REQUEST_URI} /
+# RewriteRule (.*) public/ [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^.*$ app/public/ [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule (.*) public/ [QSA,L]
+
+ # Redirect Trailing Slashes If Not A Folder...
+    # RewriteCond %{REQUEST_FILENAME} !-d
+    # RewriteCond %{REQUEST_URI} (.+)/$
+    # RewriteRule ^ %1 [L,R=301]
+
+# Traffic must be https always for all requests
+# RewriteCond %{HTTPS} on
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L]
+
+# Block direct access to index files in folders
+Options -Indexes
 
 
-# RewriteCond %{HTTP_REFERER} !^$
+# ErrorDocument 404 DocumentRoot
+# ErrorDocument 500 "Invalid File Access"
 
-# RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?example.com [NC]
-# RewriteRule \.(jpe?g|png|gif|bmp)$ - [NC,F,L]
+##########################################################################################
+## END APP GENERATED SERVICE HANDLERS
+##########################################################################################
 
-# If you want to display a “blocked” banner in place of the hotlinked image,
-# replace the above rule with:
-# RewriteRule \.(jpe?g|png|gif|bmp) http://example.com/blocked.png [R,L]
 
+##########################################################################################
+## END APACHE HTACCESS REWRITE SERVICE HANDLERS
+##########################################################################################

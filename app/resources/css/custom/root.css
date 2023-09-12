@@ -1,0 +1,15 @@
+/* Sets all variables to be used including theme variables */
+
+:root {
+  /* Theme colors */
+  --dpz-theme-dark: rgb(27, 26, 26);
+  --dpz-theme-dark-component: rgb(78, 76, 76);
+  --dpz-theme-dark-muted: rgb(187, 187, 187);
+  --dpz-theme-light: rgb(255, 255, 255);
+  /* Icon */
+  --dpz-logo: 100px;
+  --dpz-icon-sm: 15px;
+  /* Sizing */
+  --dpz-default-lg: 7rem;
+  --dpz-default-file-input-display: none;
+}

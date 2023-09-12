@@ -1,0 +1,3 @@
+runThemeSetup();
+
+forms.forEach(runQuery);

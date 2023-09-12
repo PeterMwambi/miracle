@@ -1,0 +1,59 @@
+@import url(root.css);
+
+@import url(darktheme.css);
+
+body {
+  color-scheme: light dark;
+}
+.dpz__logo {
+  max-width: var(--dpz-logo);
+}
+
+.icon-sm {
+  max-width: var(--dpz-icon-sm);
+}
+
+input[type="file"] {
+  display: var(--dpz-default-file-input-display);
+}
+.pt-lg {
+  padding-top: var(--dpz-default-lg);
+}
+
+#dpz__sidenavbar {
+  width: 300px;
+}
+
+.text-overlay {
+  font-weight: 700;
+  background: -moz-linear-gradient(
+    70deg,
+    rgb(30, 175, 241),
+    rgb(60, 76, 84),
+    rgb(30, 175, 241)
+  );
+  background-clip: text;
+  background-size: 50px 50px;
+  -webkit-background-clip: text;
+  background-origin: calc(0.5rem, 0.5rem);
+  -webkit-background-origin: content-box;
+  -webkit-text-fill-color: transparent;
+}
+
+.card {
+  border-top: 3px solid rgb(30, 175, 241);
+}
+
+.text-solid {
+  font-weight: 600;
+  text-align: justify !important;
+}
+
+.bg-overlay {
+  background: linear-gradient(
+    100deg,
+    rgba(95, 197, 245, 0.289),
+    rgba(30, 174, 241, 0.238),
+    rgba(6, 87, 124, 0.412)
+  );
+}

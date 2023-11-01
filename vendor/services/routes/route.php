@@ -2,8 +2,6 @@
 
 namespace Vendor\Services\Routes;
 
-use Vendor\Services\Configuration\Configuration;
-use Vendor\Services\Headers\Header;
 use Vendor\Services\Server\Server;
 
 /**

@@ -61,7 +61,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
     /**
      * #### Execute PDO Statement
      * - This method executes a prepared pdo statement 
-     * @return DatabaseServiceProvider
+     * @return self
      */
     private function executeQuery()
     {
@@ -72,7 +72,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
     /**
      * #### Prepare PDO Statement
      * - This method prepares a PDO statement
-     * @return DatabaseServiceProvider 
+     * @return self 
      */
     private function prepareStatement()
     {
@@ -85,7 +85,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * - This method either binds a parameter passed to a PDO statement to its value, or prepares a PDO statement
      * - Parameters to be bounded are registered in the database parameters registrar
      * @depends Vendor\Services\Database\DatabaseServiceProvider::prepareStatement()
-     * @return DatabaseServiceProvider 
+     * @return self 
      */
     private function bindParams(array $params)
     {
@@ -105,7 +105,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * - The number of bound parameters must always be equal to the number of passed variables for the binding to happen.
      * @depends Vendor\Services\Database\DatabaseServiceProvider::prepareStatement()
      * @depends Vendor\Services\Database\DatabaseServiceConfiguration::getParams()
-     * @return DatabaseServiceProvider
+     * @return self
      */
     private function bindStatementWithParams()
     {
@@ -187,7 +187,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * @param string $sql - The SQL statement to be executed
      * @param array $params - The SQL parameters to be bound in the SQL statement
      * @param int $fetch - The fetch flag the controls the result fetch mode
-     * @return DatabaseServiceProvider 
+     * @return self 
      */
     public function run(string $sql, array $params = array(), int $fetch = 3)
     {
@@ -206,7 +206,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * - Statements without a where clause contain no key index to specify the results to be obtained by a query.
      * @depends Vendor\Services\Database\DatabaseServiceProvider::bindSQLWithWhereClause()
      * @depends Vendor\Service\Database\DatabaseServiceProvider::bindSQLWithoutWhereClause()
-     * @return DatabaseServiceProvider
+     * @return self
      */
     private function bindSQL()
     {
@@ -228,7 +228,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * - The method also gets registered operators from the database query operators registrar.
      * - The method then forms an SQL statement with a where clause and executes the statement.
      * @depends Vendor\Services\Database\DatabaseServiceProvider::run()
-     * @return DatabaseServiceProvider|false
+     * @return self|false
      */
     private function bindSQLWithWhereClause()
     {
@@ -254,7 +254,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * - This method binds an SQL statement without a where clause.
      * - The method forms an SQL statement and executes the statement.
      * @depends Vendor\Services\Database\DatabaseServiceProvider::run()
-     * @return DatabaseServiceProvider
+     * @return self
      */
     private function bindSQLWithoutWhereClause()
     {
@@ -271,7 +271,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * - The method then then binds any sql parameters that have been passed to the sql parameters registrar before executing the select statement.
      * - The method will still execute even when there are no parameters to bind.
      * @depends Vendor\Services\Database\DatabaseServiceProvider::bindSQL()
-     * @return void|DatabaseServiceProvider
+     * @return void|self
      */
     protected function runSelectQuery()
     {
@@ -295,7 +295,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * - This method generates and executes a delete query
      * @depends Vendor\Services\Database\DatabaseServiceConfiguration::setDatabaseAction()
      * @depends Vendor\Service\Database\DatabaseServiceProvider::bindSQL()
-     * @return DatabaseServiceProvider
+     * @return self
      */
     protected function runDeleteQuery()
     {
@@ -318,7 +318,7 @@ abstract class DatabaseServiceProvider extends DatabaseServiceConfiguration
      * #### Run Create Table Query
      * - This method creates a table if the table does in the specified database
      * @depends Vendor\Services\Database\DatabaseServiceProvider::run()
-     * @return DatabaseServiceProvider
+     * @return self
      */
     protected function runCreateTableQuery()
     {

@@ -9,9 +9,14 @@
         "type": "php",
         "path": "app/config/server.php"
     },
-    "validation": {
-        "name": "VALIDATION_CONFIGURATION_SETTINGS",
+    "rules": {
+        "name": "RULE_CONFIGURATION_SETTINGS",
         "type": "php",
-        "path": "app/config/validation.php"
+        "path": "app/config/rules.php"
+    },
+    "errors": {
+        "name": "ERROR_CONFIGURATION_SETTINGS",
+        "type": "php",
+        "path": "app/config/errors.php"
     }
 }

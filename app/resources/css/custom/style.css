@@ -1,59 +1,274 @@
+/*
+@author Peter Mwambi <calebmwambi@gmail.com>
+@date Thu Oct 12 2023 21:37:35 GMT+0300 (East Africa Time)
+@version miracle v1.2.0
+@abstract This is the custom styles folder. All styling 
+for components, containers or pages will be made to this folder.
+The script comes in with built in support for other useful fonts
+
+*/
+
+/* 
+Call CSS root file
+*/
 @import url(root.css);
 
+/* Call css dark mode file */
 @import url(darktheme.css);
 
+/* Berlin sans */
+@font-face {
+  font-family: "BerlinSansFBDemiBold";
+  src: url(../fonts/berlinsansdemibold.ttf);
+}
+
+/* Quicksand */
+@font-face {
+  font-family: "Quicksand";
+  src: url(../fonts/Quicksand-VariableFont_wght.ttf);
+}
+
+/* Merienda */
+@font-face {
+  font-family: "Merienda";
+  src: url(../fonts/MeriendaOne-Regular.ttf);
+}
+
+/* Montserrat medium */
+@font-face {
+  font-family: "Montserrat-medium";
+  src: url(../fonts/Montserrat-Medium.ttf);
+}
+
+/* Inter light */
+
+@font-face {
+  font-family: "Inter-light";
+  src: url(../fonts/Inter-Light.ttf);
+}
+
+/* Inter medium */
+@font-face {
+  font-family: "Inter-medium";
+  src: url(../fonts/Inter-Medium.ttf);
+}
+
+/* Inter regular */
+@font-face {
+  font-family: "Inter-regular";
+  src: url(../fonts/Inter-Regular.ttf);
+}
+
+/* Defaults */
+
+* {
+  box-sizing: border-box;
+}
+
+/* Body */
 body {
   color-scheme: light dark;
-}
-.dpz__logo {
-  max-width: var(--dpz-logo);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 18px;
+  width: 100%;
+  margin: 0;
+  background: var(--blog-body-bg);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+/* End Body */
+
+/* Navbar */
+.miracle__navbar {
+  background-color: var(--miracle-navbar-bg);
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
+  font-weight: 350;
+  font-family: Inter-light;
+}
+
+.miracle__navbar .nav-brand {
+  width: 30%;
+  display: flex;
+}
+
+.miracle__navbar .nav-brand > div {
+  width: 50%;
+}
+
+.miracle__navbar .nav-brand img {
+  max-width: 120px;
+  margin: 1rem 0rem 0rem 2rem;
+  height: auto;
+}
+
+.miracle__navbar .nav-brand > div:last-child {
+  display: none;
+}
+
+.miracle__navbar .nav-brand > div:last-child img {
+  max-width: 35px;
+  margin-top: 1rem;
+}
+
+.miracle__navbar ul {
+  width: 70%;
+  justify-content: end;
+  display: flex;
+  margin-right: 3rem;
+}
+
+.miracle__navbar li {
+  list-style-type: none;
+  margin: 1rem 2.5rem 0.5rem 0rem;
+}
+
+.miracle__navbar a,
+span {
+  text-decoration: none;
+  color: rgb(77, 77, 86);
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.miracle__navbar a.nav-button {
+  background: var(--miracle-btn-bg);
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  color: rgb(230, 236, 239);
+  white-space: nowrap;
+  margin-top: -1rem;
+}
+
+/* Icon sizes */
 .icon-sm {
-  max-width: var(--dpz-icon-sm);
+  max-width: 22px;
 }
 
-input[type="file"] {
-  display: var(--dpz-default-file-input-display);
-}
-.pt-lg {
-  padding-top: var(--dpz-default-lg);
-}
-
-#dpz__sidenavbar {
-  width: 300px;
-}
-
-.text-overlay {
-  font-weight: 700;
-  background: -moz-linear-gradient(
-    70deg,
-    rgb(30, 175, 241),
-    rgb(60, 76, 84),
-    rgb(30, 175, 241)
-  );
-  background-clip: text;
-  background-size: 50px 50px;
-  -webkit-background-clip: text;
-  background-origin: calc(0.5rem, 0.5rem);
-  -webkit-background-origin: content-box;
-  -webkit-text-fill-color: transparent;
-}
-
-.card {
-  border-top: 3px solid rgb(30, 175, 241);
-}
-
-.text-solid {
-  font-weight: 600;
-  text-align: justify !important;
-}
-
-.bg-overlay {
+/* Header */
+.miracle__header {
+  --bg-image: url(../../assets/ui/images/clouds.jpg);
   background: linear-gradient(
-    100deg,
-    rgba(95, 197, 245, 0.289),
-    rgba(30, 174, 241, 0.238),
-    rgba(6, 87, 124, 0.412)
-  );
+      30deg,
+      rgba(211, 208, 208, 0.582),
+      rgba(255, 255, 255, 0.29),
+      rgba(255, 255, 255, 0.488)
+    ),
+    var(--bg-image);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.miracle__header .preamble {
+  padding: 5rem 0rem;
+}
+
+.miracle__header .preamble h1 {
+  font-family: BerlinSansFBDemiBold;
+  font-size: 40px;
+  text-align: center;
+  color: var(--miracle-heading-color-1);
+  margin-top: 9rem;
+  margin-bottom: 1.5rem;
+}
+
+.miracle__header .preamble h6 {
+  text-align: center;
+  line-height: 2.5rem;
+  font-family: Inter-regular;
+  font-size: 22px;
+  font-weight: 400;
+  color: #6b6b6b;
+}
+
+.miracle__header .preamble h6 a {
+  text-decoration: none;
+  color: rgb(11, 121, 211);
+}
+
+.miracle__header .preamble .links {
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem;
+}
+
+.miracle__header .preamble .links a {
+  margin-right: 3rem;
+  text-decoration: none;
+  color: white;
+  border-radius: 0.375rem;
+  background-color: var(--miracle-btn-bg);
+  padding: 0.5rem 1.5rem;
+}
+
+.miracle__header .preamble .links a:nth-child(3) {
+  background-color: rgb(45, 45, 45);
+}
+
+.miracle__header .preamble .links a img {
+  max-width: 18px;
+  margin-left: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.miracle__header .preamble .info {
+  display: flex;
+  justify-content: center;
+}
+
+.miracle__header .preamble .info h6 {
+  margin-right: 3rem;
+  font-size: 18px;
+  color: #5e5e5e;
+}
+
+.miracle__header .preamble .info h6 img {
+  max-width: 18px;
+  margin-top: 0.5rem;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 992px) {
+  article {
+    margin-inline: 50px;
+  }
+
+  /* Navbar */
+  .miracle__navbar {
+    display: block;
+    padding: 1rem;
+  }
+  .miracle__navbar ul {
+    display: none;
+  }
+  .miracle__navbar span {
+    display: none;
+  }
+  .miracle__navbar li {
+    margin-bottom: 1rem;
+  }
+  .miracle__navbar .nav-brand {
+    width: 100%;
+    display: flex;
+  }
+
+  .miracle__navbar .nav-brand > div:last-child {
+    display: flex;
+    justify-content: end;
+    margin-right: 1.5rem;
+  }
 }

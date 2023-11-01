@@ -101,5 +101,13 @@ class File extends FileServiceProvider
         return false;
     }
 
+    public static function exists(string $path)
+    {
+        if (self::boot()->getPath($path)) {
+            return $path;
+        }
+        return false;
+    }
+
 
 }

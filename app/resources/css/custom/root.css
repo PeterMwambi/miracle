@@ -1,15 +1,32 @@
-/* Sets all variables to be used including theme variables */
+/* 
+@author Peter Mwambi <calebmwambi@gmail.com>
+@date Thu Oct 12 2023 21:35:01 GMT+0300 (East Africa Time)
+@version miracle v1.2.0
+@abstract The root file sets basic variables that can be called 
+into other stylesheets for custom styling
+*/
 
 :root {
-  /* Theme colors */
-  --dpz-theme-dark: rgb(27, 26, 26);
-  --dpz-theme-dark-component: rgb(78, 76, 76);
-  --dpz-theme-dark-muted: rgb(187, 187, 187);
-  --dpz-theme-light: rgb(255, 255, 255);
-  /* Icon */
-  --dpz-logo: 100px;
-  --dpz-icon-sm: 15px;
-  /* Sizing */
-  --dpz-default-lg: 7rem;
-  --dpz-default-file-input-display: none;
+  --blog-body-bg: linear-gradient(
+    30deg,
+    rgba(235, 237, 237, 0.901),
+    rgba(236, 234, 234, 0.916),
+    rgba(242, 242, 242, 0.926)
+  );
+  --blog-components-bg: rgb(209, 239, 250);
+
+  --blog-btn-background: linear-gradient(
+    90deg,
+    rgb(49, 49, 49),
+    rgb(0, 145, 255),
+    rgb(49, 49, 49)
+  );
+
+  --miracle-blue-bg: #004e6d;
+
+  --miracle-navbar-bg: transparent;
+
+  --miracle-btn-bg: var(--miracle-blue-bg);
+
+  --miracle-heading-color-1: var(--miracle-blue-bg);
 }

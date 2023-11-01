@@ -55,14 +55,14 @@ function generateString(string $prefix = "", int $length = 4)
     return $generatedString;
 }
 
-$array = [];
-for ($x = 0; $x <= 10000; $x++) {
-    $string = generateString("PR");
-    if (!in_array($string, $array)) {
-        array_push($array, $string);
-    }
-}
+// $array = [];
+// for ($x = 0; $x <= 70000; $x++) {
+//     $string = generateString("PR");
+//     if (!in_array($string, $array)) {
+//         array_push($array, $string);
+//     }
+// }
 
-echo "<pre>";
-print_r($array);
-echo "</pre>";
+// echo "<pre>";
+// print_r($array);
+// echo "</pre>";

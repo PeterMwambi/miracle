@@ -228,7 +228,7 @@ abstract class RouteServiceProvider extends RouteServiceConfiguration
      */
     public function formatURI(): string
     {
-        $this->setBaseURI(Data::stringOrArrayReplace(Configuration::app("root-directory"), "", parent::getClientURI()));
+        $this->setBaseURI(Data::stringOrArrayReplace(strtolower(Configuration::app("root-directory")), "", strtolower(parent::getClientURI())));
         $this->setURI($this->hasQueryString() ? $this->getRouteFromQueryString($this->getBaseURI()) : $this->getBaseURI());
         return $this->getURI();
     }
@@ -423,13 +423,12 @@ abstract class RouteServiceProvider extends RouteServiceConfiguration
     public final static function denyAllInvalid(): bool
     {
         if (
-            !self::boot()->verify200ResponseCode() ||
             !self::boot()->verifyRouteInRoutes(self::boot()->formatURI()) ||
             !Server::get()->verifyProtocolIsHTTPS()
         ) {
             self::boot()->generate404Feedback();
             self::boot()->generateErrorLog();
-            // Header::redirect("https://" . Server::get("request/host") . Configuration::app("root-directory") . Configuration::app("default-error-route"));
+            Header::redirect("https://" . Server::get("request/host") . Configuration::app("root-directory") . Configuration::app("default-error-route"));
             return false;
         }
         return false;

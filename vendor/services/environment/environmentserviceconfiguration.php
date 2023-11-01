@@ -32,14 +32,14 @@ abstract class EnvironmentServiceConfiguration extends EnvironmentExceptions
      * LESP model service registrar
      * This property stores an instance of LESP Interface service (LoadDotEnv::class) 
      */
-    private static $instance;
+    private static self $instance;
 
     /**
      * LESP model path registrar
      * This property stores the path to the dot env file 
      * @var string
      */
-    protected $path = "";
+    private string $path = "";
 
     /*
     |`````````````````````````````````````````````````````````````````````````````````````````````````````
@@ -118,5 +118,7 @@ abstract class EnvironmentServiceConfiguration extends EnvironmentExceptions
     | END LESP MODEL PROVIDER
     |`````````````````````````````````````````````````````````````````````````````````````````````````````
     */
+
+
 
 }

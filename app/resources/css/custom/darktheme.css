@@ -1,61 +1,11 @@
 /*
-````````````````````````````````````````````````````````````````
-DARK THEME
-````````````````````````````````````````````````````````````````
+@author Peter Mwambi <calebmwambi@gmail.com>
+@date Thu Oct 12 2023 22:04:10 GMT+0300 (East Africa Time)
+@version miracle v1.2.0
+@abstract The dark theme css file sets the dark theme color 
 */
 /* Dark Theme */
 body.theme-dark {
   background-color: var(--dpz-theme-dark);
   color: var(--dpz-theme-light) !important;
-}
-
-/* Style the card on dark theme */
-body.theme-dark .card {
-  background-color: var(--dpz-theme-dark-component);
-  color: var(--dpz-theme-light);
-}
-
-/* Style the navbar on dark theme */
-body.theme-dark .navbar {
-  background-color: var(--dpz-theme-dark-component) !important;
-}
-
-/* Style the navbar links on dark theme */
-body.theme-dark .navbar li a {
-  color: var(--dpz-theme-light) !important;
-}
-/* Style the navbar dropdown menu on dark theme */
-body.theme-dark .dropdown-menu {
-  background-color: var(--dpz-theme-dark-component);
-}
-
-/* Style muted text on dark theme */
-body.theme-dark .text-muted {
-  color: var(--dpz-theme-dark-muted) !important;
-}
-
-/* Style offcanvas on dark theme */
-body.theme-dark .offcanvas {
-  background-color: var(--dpz-theme-dark-component);
-  color: var(--dpz-theme-light);
-}
-
-/* Style offcanvas button on dark theme */
-body.theme-dark .offcanvas .btn-close {
-  color: var(--dpz-theme-light);
-}
-
-body.theme-dark .text-overlay {
-  background: -moz-linear-gradient(
-    70deg,
-    rgb(0, 174, 255),
-    rgb(207, 207, 207),
-    rgb(0, 133, 195)
-  );
-  background-clip: text;
-  background-size: 50px 50px;
-  -webkit-background-clip: text;
-  background-origin: calc(0.5rem, 0.5rem);
-  -webkit-background-origin: content-box;
-  -webkit-text-fill-color: transparent;
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Models\Auth;
+namespace Vendor\Services\Security;
 
 /**
  * @author Peter Mwambi

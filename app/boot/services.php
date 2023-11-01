@@ -1,8 +1,7 @@
 <?php
 
-use PSpell\Config;
 use Vendor\Services\Configuration\Configuration;
-use Vendor\Services\Core\Autoload;
+use Vendor\Services\Hooks\Autoload;
 use Vendor\Services\File\File;
 use Vendor\Services\Routes\Route;
 use Vendor\Services\Server\Server;
@@ -19,7 +18,7 @@ use Vendor\Services\Server\Server;
  */
 function autoload()
 {
-    $autoloader = str_replace("\\", "/", dirname(dirname(__DIR__))) . "/vendor/services/core/autoload.php";
+    $autoloader = str_replace("\\", "/", dirname(dirname(__DIR__))) . "/vendor/services/hooks/autoload.php";
     if (!file_exists($autoloader)) {
         die("Autoload not found");
     }
@@ -41,26 +40,28 @@ function getDefaultLandingPage()
 
 function getRouteServiceHandlers()
 {
-    File::require("app/routes/webassets.php");
-    File::require("app/routes/webroutes.php");
+    File::require("app/routes/web.php");
     return;
 }
 
 
 function view($path)
 {
-    if (file_exists($path)) {
-        die("true");
-    } else {
-        die("false");
-    }
+    return File::require($path);
 }
 
 function asset(string $path)
 {
-    if (File::requirePath("app/resources/" . $path)):
-        return Configuration::app("root-directory") . "app/resources/" . $path;
-    endif;
+
+    if (file_exists(Configuration::app("root-absolute-path") . "/" . $path)) {
+        return Server::get("request/scheme") . "://" . Server::get("request/name") . "/" . $path;
+    } else {
+        if (File::requirePath("app/resources/" . $path)) {
+            return Configuration::app("root-directory") . "app/resources/" . $path;
+        }
+        return false;
+    }
+
 }
 
 /*

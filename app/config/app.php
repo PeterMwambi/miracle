@@ -64,6 +64,12 @@ define(
          * - Get the absolute root directory path
          */
         "root-directory-path" => str_replace("\\", "/", dirname(__DIR__, 2)),
+
+        /**
+         * Set document root
+         * - Get the absolute root directory path
+         */
+        "root-absolute-path" => $_SERVER["DOCUMENT_ROOT"],
         /*
         |``````````````````````````````````````````````````````````````````````````````````````````
         | END DIRECTORY CONFIGURATION

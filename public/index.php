@@ -1,5 +1,7 @@
 <?php
 
+use Vendor\Services\Data\Data;
+use Vendor\Services\Error\Error;
 use Vendor\Services\Routes\Route;
 
 /*
@@ -8,7 +10,6 @@ use Vendor\Services\Routes\Route;
 |``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 */
 
-// die("false");
 /*
 |``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 | BEGIN APP BOOTSTRAP
@@ -48,7 +49,7 @@ date_default_timezone_set("Africa/Nairobi");
  * @todo Create a dynamic error handler that configures the 
  * error mode for the application based on env configuration
  */
-error_reporting(E_ALL);
+Data::factory(Error::class)->reportErrors();
 
 /**
  * Get Default landing page

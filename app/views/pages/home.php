@@ -10,7 +10,8 @@ use Vendor\Services\File\File;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Miracle (A Lightweight PHP framework for the 21st Century)</title>
+    <link rel="icon" href="<?php echo asset("assets/logos/miraclev1.2.0.png") ?>">
     <link rel="stylesheet" href="<?php echo asset("css/custom/style.css") ?>">
 </head>
 
